@@ -28,31 +28,37 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@PostMapping("/member/login") // ModelAndView 형태
-	public ModelAndView login(HttpServletRequest request) {
+	
+	@PostMapping("/member/login") // Model 형태
+	public String login(HttpServletRequest request, 
+			Model model) {
 		System.out.println("post방식으로 들어옴.");
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		System.out.println("id : "+id);
 		System.out.println("pw : "+pw);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("member/doLogin"); //jsp페이지호출
-		mv.addObject("id",id);
-		mv.addObject("pw",pw);
-		return mv;
-	}
+		model.addAttribute("id",id); //view페이지 데이터 전송
+		model.addAttribute("pw",pw);
+		return "member/doLogin";
+	}	
 	
-//	@PostMapping("/member/login") // Model 형태
-//	public String login(HttpServletRequest request, Model model) {
+	
+	
+//	@PostMapping("/member/login") // ModelAndView 형태
+//	public ModelAndView login(HttpServletRequest request) {
 //		System.out.println("post방식으로 들어옴.");
 //		String id = request.getParameter("id");
 //		String pw = request.getParameter("pw");
 //		System.out.println("id : "+id);
 //		System.out.println("pw : "+pw);
-//		model.addAttribute("id",id); //view페이지 데이터 전송
-//		model.addAttribute("pw",pw);
-//		return "member/doLogin";
+//		
+//		ModelAndView mv = new ModelAndView();
+//		mv.setViewName("member/doLogin"); //jsp페이지호출
+//		mv.addObject("id",id);
+//		mv.addObject("pw",pw);
+//		return mv;
 //	}
+	
+
 
 }
