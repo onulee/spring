@@ -21,10 +21,19 @@ public class MemberController {
 	
 	//회원가입
 	@PostMapping("/member")
-	public String member2(
+	public String member(
 			@RequestParam(name="id",defaultValue = "aaa") String id,
+			@RequestParam("pw") String pw,
+			@RequestParam("name") String name,
+			@RequestParam("phone") String phone,
+			@RequestParam("gender") String gender,
 			Model model) {
+		
 		model.addAttribute("id",id);
+		model.addAttribute("pw",pw);
+		model.addAttribute("name",name);
+		model.addAttribute("phone",phone);
+		model.addAttribute("gender",gender);
 		return "member/memberResult";
 	}
 	

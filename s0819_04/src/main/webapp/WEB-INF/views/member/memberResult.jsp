@@ -18,23 +18,27 @@
 	  <table>
 	    <tr>
 	      <th>아이디</th>
-	      <td>${id}</td>
+	      <td>${member.id}</td>
 	    </tr>
 	    <tr>
 	      <th>패스워드</th>
-	      <td>${pw}</td>
+	      <td>${member.pw}</td>
 	    </tr>
 	    <tr>
 	      <th>이름</th>
-	      <td>${name}</td>
+	      <td>${member.name}</td>
 	    </tr>
 	    <tr>
 	      <th>전화번호</th>
-	      <td>${phone}</td>
+	      <td>${member.phone}</td>
 	    </tr>
 	    <tr>
 	      <th>성별</th>
-	      <td>${gender}</td>
+	      <td>${member.gender}</td>
+	    </tr>
+	    <tr>
+	      <th>취미</th>
+	      <td>${member.hobby}</td>
 	    </tr>
 	    <tr>
 	      <th colspan="2"><a href="/">메인페이지 이동</a></th>
