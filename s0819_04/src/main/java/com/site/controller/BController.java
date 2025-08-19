@@ -25,7 +25,7 @@ public class BController {
 	}
 	
 	@GetMapping("/board/board")
-	public String board(@RequestParam(defaultValue="1") String page,	
+	public String board(@RequestParam(name="page", defaultValue="1") int page,	
 			Model model) {
 		System.out.println("param page : "+page);
 		model.addAttribute("page",page);
