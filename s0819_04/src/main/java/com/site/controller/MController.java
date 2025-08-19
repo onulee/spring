@@ -13,17 +13,23 @@ import com.site.dto.Member;
 @Controller
 public class MController {
 
+	@GetMapping("/member/mView")
+	public String mView() {
+		// member 정보
+		
+		
+		
+		return "member/mView";
+	}
+	
 	@GetMapping("/member/member")
 	public String member() {
 		return "member/memberInput";
 	}
 	
 	@PostMapping("/member/member")
-	public String member(Member member,
-			@RequestParam("hobby") String[] hobby,
-			Model model) {
-		
-		System.out.println(Arrays.toString(hobby));
+	public String member(Member member,Model model) {
+//		System.out.println(Arrays.toString(hobby));
 		model.addAttribute("member",member);
 		return "member/memberResult";
 	}
