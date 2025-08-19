@@ -17,23 +17,23 @@
 	  <table>
 	    <tr>
 	      <th>번호</th>
-	      <td></td>
+	      <td>${boardDto.bno}</td>
 	    </tr>
 	    <tr>
 	      <th>제목</th>
-	      <td></td>
+	      <td>${boardDto.btitle}</td>
 	    </tr>
 	    <tr>
 	      <th>작성자</th>
-	      <td></td>
+	      <td>${boardDto.id}</td>
 	    </tr>
 	    <tr>
 	      <th>작성일</th>
-	      <td></td>
+	      <td>${boardDto.bdate}</td>
 	    </tr>
 	    <tr>
 	      <th>조회수</th>
-	      <td></td>
+	      <td>${boardDto.bhit}</td>
 	    </tr>
 	  </table>
 	  <a href="/">메인페이지 이동</a>
