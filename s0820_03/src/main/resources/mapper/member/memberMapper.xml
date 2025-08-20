@@ -11,7 +11,7 @@
   
   <!-- 회원정보  -->
   <select id="selectLogin" resultType="com.site.dto.Member">
-    select * from member where id=#{param1} and pw=#{param2}
+    select * from member where id=#{id} and pw=#{pw}
   </select>
   <!-- 
   <insert id=""></insert>
