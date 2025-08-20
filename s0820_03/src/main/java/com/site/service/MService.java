@@ -12,4 +12,7 @@ public interface MService {
 	//로그인 정보
 	Member selectLogin(String id, String pw);
 
+	//회원상세보기
+	Member selectOne(String id);
+
 }

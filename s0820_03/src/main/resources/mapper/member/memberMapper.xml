@@ -8,10 +8,13 @@
     select * from member
   </select>
   
-  
   <!-- 회원정보  -->
   <select id="selectLogin" resultType="com.site.dto.Member">
     select * from member where id=#{id} and pw=#{pw}
+  </select>
+  <!-- 회원상세보기  -->
+  <select id="selectOne" resultType="com.site.dto.Member">
+    select * from member where id=#{id}
   </select>
   <!-- 
   <insert id=""></insert>

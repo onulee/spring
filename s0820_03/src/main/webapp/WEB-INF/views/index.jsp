@@ -11,6 +11,8 @@
 	  <ul>
 	    <li><a href="/member/mList">전체회원리스트</a></li>
 	    <li><a href="/member/login">로그인</a></li>
+	    <li><a href="/member/mView">회원상세보기(aaa)</a></li>
+	    <li><a href="/board/bList">게시판</a></li>
 	    <li><a href="/member/logout">로그아웃</a></li>
 	  </ul>
 	

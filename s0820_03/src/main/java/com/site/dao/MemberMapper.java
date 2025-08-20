@@ -16,4 +16,7 @@ public interface MemberMapper {
 	//로그인정보
 	Member selectLogin(@Param("id") String id, @Param("pw") String pw);
 
+	//회원상세보기
+	Member selectOne(String id);
+
 }

@@ -26,4 +26,10 @@ public class MServiceImpl implements MService {
 		return member;
 	}
 
+	@Override //회원상세보기
+	public Member selectOne(String id) {
+		Member member = memberMapper.selectOne(id);
+		return member;
+	}
+
 }

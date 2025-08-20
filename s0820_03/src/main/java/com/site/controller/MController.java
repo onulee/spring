@@ -16,6 +16,15 @@ public class MController {
 	
 	@Autowired MService mService;
 	
+	// 회원상세보기
+	@GetMapping("/member/mView")
+	public String mView(Model model) {
+		String id = "aaa";
+		Member member = mService.selectOne(id);
+		model.addAttribute("member",member);
+		return "member/mView";
+	}
+	
 	//로그인화면
 	@GetMapping("/member/login")
 	public String login() {
@@ -36,8 +45,6 @@ public class MController {
 		}else {
 			System.out.println("아이디 : "+m.getId()+" - 로그인성공!");
 		}
-		
-		
 		return "member/login";
 	}
 	
