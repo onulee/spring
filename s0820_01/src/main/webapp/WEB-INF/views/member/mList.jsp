@@ -25,14 +25,17 @@
 			<th>성별</th>	      
 			<th>취미</th>	      
 	    </tr>
-	    <tr>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	    </tr>
+	    <c:forEach var="member" items="${list}">
+		    <tr>
+		        <td>${member.id }</td>
+		        <td>${member.pw }</td>
+		        <td>${member.name }</td>
+		        <td>${member.phone }</td>
+		        <td>${member.gender }</td>
+		        <td>${member.hobby }</td>
+		    </tr>
+	    </c:forEach>
+	    
 	    <tr>
 	        <td colspan="6"><a href="/">메인페이지 이동</a></td>
 	    </tr>

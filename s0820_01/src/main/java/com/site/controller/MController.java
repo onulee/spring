@@ -19,7 +19,9 @@ public class MController {
 	public String mList(Model model) {
 		//회원전체리스트 - List, 회원1개 - 객체(Member), 회원수 - int
 		List<Member> list = mService.selectAll();
-		
+	    System.out.println("회원정보 개수 : "+list.size());
+	    //데이터전달
+		model.addAttribute("list",list);
 		return "member/mList";
 	}
 }
