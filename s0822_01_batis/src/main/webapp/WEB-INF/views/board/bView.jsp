@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>회원상세보기</title>
+		<title>게시글상세보기</title>
 		<style>
 		  h2{text-align: center;}
 		  table{width:400px; margin:10px auto; }
@@ -16,27 +16,31 @@
 		</style>
 	</head>
 	<body>
-	  <h2>회원상세보기</h2>
+	  <h2>게시글상세보기</h2>
 	  <table>
 	    <tr>
-	      <th>아이디</th>
-	      <td>${member.id}</td>
+	      <th>번호</th>
+	      <td>${board.bno}</td>
 	    </tr>
 	    <tr>
-	      <th>패스워드</th>
-	      <td>${member.pw}</td>
+	      <th>제목</th>
+	      <td>${board.btitle}</td>
 	    </tr>
 	    <tr>
-	      <th>이름</th>
-	      <td>${member.name}</td>
+	      <th>내용</th>
+	      <td>${board.bcontent}</td>
 	    </tr>
 	    <tr>
-	      <th>전화번호</th>
-	      <td>${member.phone}</td>
+	      <th>작성자</th>
+	      <td>${board.id}</td>
 	    </tr>
 	    <tr>
-	      <th>성별</th>
-	      <td>${member.gender}</td>
+	      <th>작성일</th>
+	      <td>${board.bdate}</td>
+	    </tr>
+	    <tr>
+	      <th>조회수</th>
+	      <td>${board.bhit}</td>
 	    </tr>
 	    <tr>
 	      <th colspan="2"><a href="/">메인페이지 이동</a></th>
