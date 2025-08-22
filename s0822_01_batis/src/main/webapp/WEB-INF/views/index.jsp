@@ -27,6 +27,7 @@
 	      <h3>로그인성공 : ${session_name} 님 환영합니다.</h3>
 	      <li><a href="/member/logout">로그아웃</a></li>
 	   </c:if>
+	   <li><a href="/board/bList">게시판</a></li>
 	   <li><a href="/member/mWrite">회원가입</a></li>
 	   <li><a href="/member/mList">회원리스트</a></li>
 	 </ul>
