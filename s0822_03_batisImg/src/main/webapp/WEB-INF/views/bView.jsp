@@ -70,7 +70,7 @@
       <tr>
         <td class="article">
           ${board.bcontent}
-          <img src="https://www.midashotel.co.kr/Midas_uploads/2019-12-11%2017-13-142020%EB%85%84_%ED%82%A4%EC%A6%88%EC%9E%BC_%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD_%EC%95%88%EB%82%B4.jpg" alt="" width="80%"></td>
+        </td>  
       </tr>
       <tr>
         <td><strong>다음글</strong> <span class="separator">|</span> [키즈잼] 2월 프로그램 안내</td>
@@ -80,10 +80,17 @@
       </tr>
     </table>
 
-    <div class="list">목록</div>
-    <div class="list">삭제</div>
-    <div class="list">수정</div>
+    <a href="/bList"><div class="list">목록</div></a> 
+    <div onclick="deleteBtn()" class="list">삭제</div>
+    <a href="/bUpdate?bno=${board.bno}"><div class="list">수정</div></a>
   </section>
+  <script>
+    function deleteBtn(){
+    	if(confirm(${board.bno}+" 번을 삭제하시겠습니까?")){
+    		location.href="/bDelete?bno="+${board.bno};
+    	}
+    }
+  </script>
 
   <footer>
     <div class="wrapper">

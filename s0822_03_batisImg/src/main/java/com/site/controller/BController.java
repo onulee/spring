@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.site.dto.Board;
 import com.site.service.BService;
@@ -16,11 +17,24 @@ public class BController {
 
 	@Autowired BService bService;
 	
+	@GetMapping("/bDelete")
+	public String bDelete(
+			@RequestParam(name="bno",defaultValue="0") int bno ) {
+		System.out.println("bno : "+ bno);
+		// 리턴없음, 매개변수 : bno
+		// controller -> service -> serviceImpl -> dao -> xml
+		
+		bService.delete(bno);
+		
+		return "redirect:/bList?flag=2"; //flag:2 삭제
+	}
+	
+	
 	@GetMapping("/bView")
 	public String bView(Board b,Model model) {
 		//게시글 1개 - Board객체
 		int bno = b.getBno();
-		Board board = bService.findByBno(b);
+		Board board = bService.findByBno(bno);
 		model.addAttribute("board",board);
 		return "bView";
 	}

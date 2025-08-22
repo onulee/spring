@@ -24,4 +24,16 @@ public class BServiceImpl implements BService {
 		boardMapper.save(b);
 	}
 
+	@Override //게시글 보기
+	public Board findByBno(int bno) {
+		Board board = boardMapper.findByBno(bno);
+		return board;
+	}
+
+	@Override //게시글 삭제
+	public void delete(int bno) {
+		boardMapper.delete(bno);
+		
+	}
+
 }

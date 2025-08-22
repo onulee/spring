@@ -12,4 +12,10 @@ public interface BService {
 	//게시글저장
 	void save(Board b);
 
+	//게시글 보기
+	Board findByBno(int bno);
+
+	//게시글 삭제
+	void delete(int bno);
+
 }
