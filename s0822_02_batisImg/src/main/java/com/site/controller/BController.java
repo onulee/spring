@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.site.dto.Board;
 import com.site.service.BService;
@@ -27,14 +28,20 @@ public class BController {
 		System.out.println("내용 : "+board.getBcontent());
 		System.out.println("작성자 : "+board.getId());
 		System.out.println("첨부파일 : "+board.getBfile());
-		return "bWrite";
+		// controller -> service -> serviceImpl -> dao -> xml
+		bService.save(board);
+		
+		return "redirect:/board/bList?flag=1";
 	}
 	
 	@GetMapping("/board/bList")
-	public String bList(Model model) {
+	public String bList(
+			@RequestParam(name="flag",defaultValue = "0") String flag,
+			Model model) {
 		// controller -> service -> serviceImpl -> dao -> xml
 		List<Board> list = bService.findAll();
 		model.addAttribute("list",list);
+		model.addAttribute("flag",flag);
 		return "bList";
 	}
 	

@@ -15,4 +15,7 @@ public interface BoardMapper {
 	//게시글 1개
 	Board findByBno(int bno);
 
+	//게시글저장
+	void save(Board board);
+
 }

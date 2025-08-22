@@ -25,4 +25,9 @@ public class BServiceImpl implements BService {
 		return board;
 	}
 
+	@Override //게시글저장
+	public void save(Board board) {
+		boardMapper.save(board);
+	}
+
 }

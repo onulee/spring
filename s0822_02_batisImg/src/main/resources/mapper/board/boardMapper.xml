@@ -14,6 +14,14 @@
     select * from board where bno=#{bno}
   </select> 
   
+  <!-- 게시글 저장 -->
+  <insert id="save">
+    insert into board values (
+      board_seq.nextval,#{btitle},#{bcontent},#{id},
+      board_seq.currval,0,0,0,sysdate
+    )
+  </insert>
+  
 </mapper>
 
 
