@@ -14,7 +14,17 @@ public class BServiceImpl implements BService {
 	@Autowired BoardMapper boardMapper;
 	
 	@Override //게시글 전체가져오기
-	public List<Board> findAll() {
+	public List<Board> findAll(String page) {
+//		1. 총 게시글 수 ( listCountAll ) - 17
+//		2. 현재 페이지 ( page ) - 1
+//		3. 최대 페이지 ( maxpage ) 
+//		4. 첫 페이지 ( startpage )
+//		5. 마지막 페이지 ( endpage )
+        int rowPerpage = 10; //1page에 10개의 게시글을 출력
+//        int maxPage = Math.ceil();
+		
+		int listCountAll = boardMapper.findByCount();
+		System.out.println("BServiceImpl 게시글 전체개수 : "+listCountAll);
 		List<Board> list = boardMapper.findAll();
 		return list;
 	}

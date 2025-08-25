@@ -15,6 +15,11 @@
       order by bgroup desc, bstep asc
    </select>
    
+   <!-- 게시글 전체개수 -->
+   <select id="findByCount" resultType="int">
+      select count(*) from board
+   </select>
+   
    <!-- 게시글 전체가져오기 -->
    <select id="findAll"  resultType="com.site.dto.Board">
       select * from board 
