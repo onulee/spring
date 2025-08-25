@@ -86,7 +86,7 @@
 	      <tr>
 	        <td>${board.bno}</td>
 	        <td class="table-title">
-	          <a href="/board/bView">${board.btitle}</a>
+	          <a href="/board/bView/${board.bno}">${board.btitle}</a>
 	        </td>
 	        <td>${board.id}</td>
 	        <td>${board.bdate}</td>
@@ -105,7 +105,7 @@
       <li class="last"></li>
     </ul>
 
-    <div class="write">쓰기</div>
+    <a href="/board/bWrite"><div class="write">쓰기</div></a>
   </section>
 
   <footer>

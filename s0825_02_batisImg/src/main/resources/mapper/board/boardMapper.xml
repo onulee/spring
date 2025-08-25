@@ -5,8 +5,19 @@
 <mapper namespace="com.site.dao.BoardMapper">
    <!-- 게시글 전체가져오기 -->
    <select id="findAll"  resultType="com.site.dto.Board">
-      select * from board
+      select * from board order by bgroup desc,bstep asc
    </select>
+   <!-- 게시글 1개 가져오기 -->
+   <select id="findBno" resultType="com.site.dto.Board">
+      select * from board where bno = #{bno}
+   </select>
+   <!-- 게시판 글쓰기 저장 -->
+   <insert id="save">
+      insert into board values (board_seq.nextval,#{btitle},
+        #{bcontent},#{id},board_seq.currval,0,0,0,#{bfile},sysdate
+      )
+   </insert>
+   
   
 </mapper>
 
