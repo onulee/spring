@@ -15,5 +15,9 @@ public interface BoardMapper {
 	Board findBno(int bno);
 	//게시판 글쓰기 저장
 	void save(Board b);
+	//게시글 삭제
+	void delete(int bno);
+	//게시글 수정 저장
+	void update(Board b);
 
 }

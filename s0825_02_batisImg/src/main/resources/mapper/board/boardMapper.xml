@@ -17,6 +17,17 @@
         #{bcontent},#{id},board_seq.currval,0,0,0,#{bfile},sysdate
       )
    </insert>
+   <!--  게시글 삭제 -->
+   <delete id="delete">
+      delete board where bno=#{bno}
+   </delete>
+   <!--  게시글 수정 저장 -->
+   <update id="update">
+      update board set
+      btitle=#{btitle},bcontent=#{bcontent},bfile=#{bfile},
+      bdate = sysdate
+      where bno = #{bno}
+   </update>
    
   
 </mapper>

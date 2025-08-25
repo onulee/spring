@@ -8,11 +8,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>글쓰기 수정</title>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/read.css">
+  <link rel="stylesheet" href="/css/write.css">
 </head>
 
 <body>
@@ -51,50 +50,61 @@
   </nav>
 
   <section>
-    <h1>NOTICE</h1>
+    <h1>글쓰기 수정</h1>
+    <hr>
 
-    <table>
-      <tr>
-        <th>제목 : ${board.btitle }</th>
-      </tr>
-      <tr>
-        <td>
-          <fmt:formatDate value="${board.bdate}" pattern="yyyy-MM-dd" />
-        </td>
-      </tr>
-      <tr>
-        <td class="article">
-          ${board.bcontent }
-        </td>  
-      </tr>
-      <tr>
-        <td class="article">
+    <form action="/board/bUpdate" name="write" method="post">
+    <input type="hidden" name="bno" value="${board.bno}" />
+    <input type="hidden" name="bfile2" value="${board.bfile}" />
+      <table>
+        <colgroup>
+          <col width="15%">
+          <col width="85%">
+        </colgroup>
+        
+        <tr>
+          <th>제목</th>
+          <td>
+            <input type="text" name="btitle" value="${board.btitle}">
+          </td>
+        </tr>
+        <tr>
+          <th>작성자</th>
+          <td>
+            <input type="text" name="id" value="${board.id }">
+          </td>
+        </tr>
+        <tr>
+          <th>내용</th>
+          <td>
+            <textarea name="bcontent" cols="50" rows="10">${board.bcontent }
+            
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <th>이미지 표시</th>
+          <td>
+            <input type="file" name="bfile" id="file">
+          </td>
+        </tr>
+        <tr>
+          <th>이미지</th>
           <c:if test="${board.bfile == null }">
-            파일첨부 : 첨부된 파일이 없습니다.
+            <td>첨부파일이 없습니다.</td>
           </c:if>
           <c:if test="${board.bfile != null }">
-            파일첨부 : ${board.bfile }
+            <td>${board.bfile}</td>
           </c:if>
-        </td>  
-      </tr>
-      <tr>
-        <td><strong>다음글</strong> <span class="separator">|</span> [키즈잼] 2월 프로그램 안내</td>
-      </tr>
-      <tr>
-        <td><strong>이전글</strong> <span class="separator">|</span> [키즈잼] 2020년 1분기 정기 휴관일 안내</td>
-      </tr>
-    </table>
+        </tr>
+      </table>
+      <hr>
+      <div class="button-wrapper">
+        <button type="submit" class="write">수정완료</button>
+        <button type="button" onclick="javascript:location.href='/board/bList' " class="cancel">취소</button>
+      </div>
+    </form>
 
-    <a href="/board/bList"><div class="list">목록</div></a>
-    <div class="list" onclick="deleteBtn()">삭제</div>
-    <script>
-       function deleteBtn(){
-	       if(confirm(${board.bno}+"번 게시글을 삭제하시겠습니까?")){
-	    	   location.href="/board/bDelete/"+${board.bno};
-	       }
-       }
-    </script>
-    <a href="/board/bUpdate/${board.bno }"><div class="list">수정</div></a>
   </section>
 
   <footer>

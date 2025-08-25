@@ -31,4 +31,14 @@ public class BServiceImpl implements BService {
 		
 	}
 
+	@Override //게시글 삭제
+	public void delete(int bno) {
+		boardMapper.delete(bno);
+	}
+
+	@Override //게시글 수정 저장
+	public void update(Board b) {
+		boardMapper.update(b);
+	}
+
 }

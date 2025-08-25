@@ -13,6 +13,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/notice_list.css">
+  <script>
+     if("${flag}" == "1") alert("게시글이 저장되었습니다.");
+     if("${flag}" == "-1") alert("게시글이 삭제되었습니다.");
+     if("${flag}" == "2") alert("게시글이 수정되었습니다.");
+  </script>
 </head>
 <body>
   <header>
