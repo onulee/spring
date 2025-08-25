@@ -16,5 +16,7 @@ public interface BService {
 	void delete(int bno);
 	//게시글 수정 저장
 	void update(Board b);
+	//검색 게시글 여러개 가져오기
+	List<Board> findByCaAndSWord(String category, String sWord);
 
 }

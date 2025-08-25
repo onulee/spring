@@ -3,6 +3,7 @@ package com.site.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.site.dto.Board;
 
@@ -19,5 +20,8 @@ public interface BoardMapper {
 	void delete(int bno);
 	//게시글 수정 저장
 	void update(Board b);
+	//검색 게시글 여러개 가져오기
+	List<Board> findByCaAndSWord(@Param("category") String category,
+			@Param("sWord") String sWord);
 
 }

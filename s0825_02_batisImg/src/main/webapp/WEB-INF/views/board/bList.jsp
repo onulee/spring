@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시판</title>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="../css/style.css">
@@ -57,18 +58,30 @@
   <section>
     <h1>NOTICE</h1>
     <div class="wrapper">
-      <form action="/search" name="search" method="post">
+    <script>
+      function searchBtn(){
+    	  if($("#sWord").val().length < 1){
+    		  alert("검색어를 입력하셔야 검색이 가능합니다.");
+    		  $("#sWord").focus();
+    		  return;
+    	  }
+    	  var category = $("#category").val();
+    	  var sWord = $("#sWord").val();
+    	  location.href="/board/search?category="+category+"&sWord="+sWord;
+      }
+    </script>
+      <!-- 검색부분 -->
+      <form action="/board/search" name="search" method="get">
         <select name="category" id="category">
-          <option value="0">전체</option>
-          <option value="title">제목</option>
-          <option value="content">내용</option>
+          <option value="all">전체</option>
+          <option value="btitle">제목</option>
+          <option value="bcontent">내용</option>
         </select>
 
         <div class="title">
-          <input type="text" size="16">
+          <input type="text" name="sWord" id="sWord" size="16">
         </div>
-  
-        <button type="submit"><i class="fas fa-search"></i></button>
+        <button type="button" onclick="searchBtn()"><i class="fas fa-search"></i></button>
       </form>
     </div>
 

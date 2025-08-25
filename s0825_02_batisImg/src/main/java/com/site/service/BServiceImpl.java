@@ -41,4 +41,10 @@ public class BServiceImpl implements BService {
 		boardMapper.update(b);
 	}
 
+	@Override //검색 게시글 여러개 가져오기
+	public List<Board> findByCaAndSWord(String category, String sWord) {
+		List<Board> list = boardMapper.findByCaAndSWord(category,sWord);
+		return list;
+	}
+
 }

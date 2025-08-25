@@ -80,6 +80,23 @@ public class BController {
 		return "board/bView";
 	}
 	
+	//게시글 검색
+	@GetMapping("/board/search")
+	public String search(
+			@RequestParam("category") String category,
+			@RequestParam("sWord") String sWord,
+			Model model) {
+		System.out.println("카테고리 : "+category);
+		System.out.println("검색 : "+sWord);
+		//검색 게시글 여러개 가져오기
+		List<Board> list = bService.findByCaAndSWord(category,sWord);
+		model.addAttribute("list",list);
+		
+		return "board/bList";
+	}
+	
+	
+	
 	//게시글 전체가져오기
 	@GetMapping("/board/bList")
 	public String bList(
