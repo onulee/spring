@@ -1,5 +1,7 @@
 package com.site.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.site.dto.Board;
 import com.site.service.BService;
@@ -62,9 +66,28 @@ public class BController {
 		return "board/bWrite";
 	}
 	
+	// 파일여러개 List<MultipartFile> files
 	// 게시판 글쓰기 저장
 	@PostMapping("/board/bWrite")
-	public String bWrite(Board b) {
+	public String bWrite(Board b,
+			@RequestPart("file") MultipartFile file) {
+		b.setBfile(""); //null경우 에러가 나서, 빈공백을 추가
+		//파일첨부가 되어 있어야 진행
+		if(!file.isEmpty()) {
+			// 원본파일이름 가져오기
+			String originFileName = file.getOriginalFilename();
+			// 동일이름이 생기지 않도록 시간을 이름에 추가
+			long time = System.currentTimeMillis();
+			// 1.jpg -> 48459848493939_1.jpg
+			String uploadName = String.format("%d_%s", time,originFileName);
+			// 파일저장위치
+			String fileLocation = "c:/upload/";
+			File f = new File(fileLocation+uploadName); //c:upload/48459848493939_1.jpg 
+			b.setBfile(uploadName); //board객체의 bfile 이름추가
+			try { file.transferTo(f); //파일업로드 진행
+			} catch (Exception e) { e.printStackTrace(); } 
+		}
+		// 파일첨부가 없으면 글만 저장
 		bService.save(b);
 		return "redirect:/board/bList?flag=1"; //flag=1-글쓰기 성공
 	}

@@ -56,7 +56,7 @@
   </nav>
 
   <section>
-    <h1>NOTICE</h1>
+    <a href="/"><h1>NOTICE</h1></a>
     <div class="wrapper">
     <script>
       function searchBtn(){

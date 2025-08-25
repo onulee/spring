@@ -69,6 +69,11 @@
       </tr>
       <tr>
         <td class="article">
+          <img src="/upload/${board.bfile}" width="50%" />
+        </td>  
+      </tr>
+      <tr>
+        <td class="article">
           <c:if test="${board.bfile == null }">
             파일첨부 : 첨부된 파일이 없습니다.
           </c:if>
