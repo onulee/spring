@@ -25,7 +25,7 @@ public class BController {
 	@PostMapping("/board/bUpdate")
 	public String bUpdate(Board b, @RequestParam("bfile2") String bfile2) {
 		// 첨부된 파일이 없으면 기존 첨부된 파일을 업데이트 함.
-		if(b.getBfile() == null) {
+		if(b.getBfile() == "") {
 			b.setBfile(bfile2);
 		}
 		
