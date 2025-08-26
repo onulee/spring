@@ -1,6 +1,7 @@
 package com.site.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,12 @@ public class BController {
 			@RequestParam(name="page",defaultValue = "1") int page,
 			Model model) {
 		System.out.println("page : "+page);
-		List<Board> list = bService.findAll(page);
-		model.addAttribute("list",list);
+		Map<String, Object> map = bService.findAll(page);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("page",map.get("page"));
+		model.addAttribute("maxpage",map.get("maxpage"));
+		model.addAttribute("startpage",map.get("startpage"));
+		model.addAttribute("endpage",map.get("endpage"));
 		return "board/bList";
 	}
 

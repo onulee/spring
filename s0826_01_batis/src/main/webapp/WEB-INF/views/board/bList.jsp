@@ -99,13 +99,38 @@
     </table>
 
     <ul class="page-num">
-      <li class="first"></li>
-      <li class="prev"></li>
-      <li class="num">
-        <div>1</div>
-      </li>
-      <li class="next"></li>
-      <li class="last"></li>
+      <c:if test="${page <= 1 }">
+          <li class="first"></li>
+      	  <li class="prev"></li>
+      </c:if>
+      <c:if test="${page > 1 }">
+	      <a href="/board/bList?page=1">
+	      	<li class="first"></li>
+	      </a>
+	      <a href="/board/bList?page=${page-1}">
+	        <li class="prev"></li>
+	      </a>
+      </c:if>
+      <c:forEach var="i" begin="${startpage}" end="${endpage}">
+	      <c:if test="${page == i }">
+		      <li class="num on">
+		          <div>${i}</div>
+		      </li>
+	      </c:if>
+	      <c:if test="${page != i }">
+		      <li class="num">
+		        <a href="/board/bList?page=${i}">
+		          <div>${i}</div>
+		        </a>
+		      </li>
+	      </c:if>
+      </c:forEach>
+      <a href="/board/bList?page=${page+1}">
+          <li class="next"></li>
+      </a>
+      <a href="/board/bList?page=${maxpage}">
+	      <li class="last"></li>
+      </a>
     </ul>
 
     <div class="write">쓰기</div>
