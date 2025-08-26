@@ -231,7 +231,8 @@ $(document).ready(function() {
 								<th scope="col" class="tnone">조회수</th>
 							</thead>
 							<tbody>
-								<c:forEach var="customer" items="${list}">
+								<!-- 리스트 출력 -->
+								<c:forEach var="customer" items="${map.list}">
 								<tr>
 									<td class="tnone">${customer.bno}</td>
 									<td class="left">
@@ -255,14 +256,40 @@ $(document).ready(function() {
 					<div class="btnAreaList">
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
-
-						<a href="#" class="n"><img src="../images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
-						<strong>1</strong>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-						<a href="#" class="next"><img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						
+						<c:if test="${map.page <= 1 }">
+						    <img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+						    <img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+						</c:if>
+						<c:if test="${map.page > 1 }">
+							<a href="/customer/list?page=1" class="n">
+								<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+							</a>
+							<a href="/customer/list?page=${map.page-1}" class="pre">
+								<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+							</a>
+						</c:if>
+						<c:forEach var="i" begin="${map.startpage}" end="${map.endpage}">
+						<c:if test="${map.page == i }">
+						  <strong>${i}</strong>
+						</c:if>
+						<c:if test="${map.page != i }">
+						  <a href="/customer/list?page=${i}">${i}</a>
+						</c:if>
+						</c:forEach>
+						<c:if test="${map.page>=map.maxpage}">
+						    <img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+						    <img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+						</c:if>
+						<c:if test="${map.page<map.maxpage}">
+						    <a href="/customer/list?page=${map.page+1}" class="next">
+							    <img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+							</a>
+							<a href="/customer/list?page=${map.maxpage}" class="n">
+								<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+							</a>
+						</c:if>
+						
 
 						</div>
 						<!-- //페이징이동1 -->
