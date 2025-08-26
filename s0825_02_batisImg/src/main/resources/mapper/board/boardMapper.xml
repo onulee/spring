@@ -22,8 +22,10 @@
    
    <!-- 게시글 전체가져오기 -->
    <select id="findAll"  resultType="com.site.dto.Board">
-      select * from board 
-      order by bgroup desc,bstep asc
+      select * from (
+	  select row_number() over (order by bgroup desc,bstep asc) rnum,
+	  a.* from board a)
+	  where rnum between #{startrow} and #{endrow}
    </select>
    
    

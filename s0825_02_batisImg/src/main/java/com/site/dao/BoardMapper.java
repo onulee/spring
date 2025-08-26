@@ -11,7 +11,7 @@ import com.site.dto.Board;
 public interface BoardMapper {
 
 	//게시글 전체가져오기
-	List<Board> findAll();
+	List<Board> findAll(@Param("startrow") int startrow, @Param("endrow") int endrow);
 	//게시글 전체개수
 	int findByCount();
     //게시글 1개 가져오기

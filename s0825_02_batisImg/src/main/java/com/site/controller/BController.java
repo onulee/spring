@@ -121,7 +121,7 @@ public class BController {
 	//게시글 전체가져오기
 	@GetMapping("/board/bList")
 	public String bList(
-			@RequestParam(name="page",defaultValue = "1") String page,
+			@RequestParam(name="page",defaultValue = "1") int page,
 			@RequestParam(name="flag",required = false) String flag,
 			Model model) {
 		// Map으로 리턴 받음 - 여러개의 object로 리턴받음
@@ -130,7 +130,6 @@ public class BController {
 		List<Board> list = bService.findAll(page);
 		model.addAttribute("list",list);		
 		model.addAttribute("flag",flag); // 없을때 null, 1: 저장		
-		System.out.println("리스트 개수 : "+list.size());
 		return "board/bList";
 	}
 
