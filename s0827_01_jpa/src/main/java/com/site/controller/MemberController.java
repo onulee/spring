@@ -35,7 +35,19 @@ public class MemberController {
 	@PostMapping("/member/idBtn") // 중복id확인
 	public String idBtn(Member m) {
 		System.out.println("controller id : "+m.getId());
-		return "flag:1";
+		// findById(m.getId) -> service,serviceImpl,repository
+		Member member = memberService.findById(m.getId());
+			
+		
+		
+		String flag = "";
+		if(member.getId() != null) {
+			flag = "-1"; //아이디 사용불가
+		}else {
+			flag = "1";  // 아이디 사용가능
+		}
+		
+		return flag;
 	}
 	
 	@GetMapping("/member/logout") //로그아웃

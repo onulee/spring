@@ -116,18 +116,22 @@
 								   $("#id").focus();
 								   return;
 							   }
-							   alert(id+" 아이디 중복체크를 진행합니다.");
+							   //alert(id+" 아이디 중복체크를 진행합니다.");
 							   //ajax
 							   $.ajax({
 								  url:"/member/idBtn",
 								  method:"post",
 								  data:{"id":id},
-								  dataType:"json",
+								  dataType:"text",
 								  success:function(data){
-									  alert(data);
+									  if(data == "1"){
+										  alert(id+" : 아이디 사용가능");
+									  }else{
+										  alert(id+" : 아이디 사용불가");
+									  }
 									  console.log(data);
 								  },
-								  fail:function(){
+								  error:function(){
 									  alert("실패");
 								  }
 								   
