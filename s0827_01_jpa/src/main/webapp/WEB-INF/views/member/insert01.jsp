@@ -7,6 +7,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/css/style_header.css">
 		<link rel="stylesheet" type="text/css" href="/css/style_join01_terms.css">
 		<link rel="stylesheet" type="text/css" href="/css/style_footer.css">
@@ -48,7 +49,7 @@
 		
 		
 		<section>
-			<form name="agree" method="get" action="join02_info_input.html">
+			<form action="/member/insert02" name="agree" method="get" >
 				<div id="subBanner"></div>
 				<div id="locationN">
 					<ul>
@@ -113,7 +114,7 @@
 					</article>
 				</div>
 				<div class="agreeRadio">
-					<input type="radio" name="f_agree" id="f_agree" value="agree" />
+					<input type="radio" class="agree_all" name="f_agree" id="f_agree" value="agree" />
 					<label for="f_agree">이용약관에 동의합니다.</label>
 					<input type="radio" name="f_agree" id="f_disagree" value="disagree" />
 					<label for="f_disagree">동의하지 않습니다.</label>
@@ -151,7 +152,7 @@
 					</article>
 				</div>
 				<div class="agreeRadio">
-					<input type="radio" name="s_agree" id="s_agree" value="agree" />
+					<input type="radio" class="agree_all" name="s_agree" id="s_agree" value="agree" />
 					<label for="s_agree">개인정보 보호를 위한 이용자 동의사항에 동의합니다.</label>
 					<input type="radio" name="s_agree" id="s_disagree" value="disagree" />
 					<label for="s_disagree">동의하지 않습니다.</label>
@@ -181,7 +182,7 @@
 					</article>
 				</div>
 				<div class="agreeRadio">
-					<input type="radio" name="t_agree" id="t_agree" value="agree" />
+					<input type="radio" class="agree_all" name="t_agree" id="t_agree" value="agree" />
 					<label for="t_agree">개인정보 취급위탁에 동의합니다.</label>
 					<input type="radio" name="t_agree" id="t_disagree" value="disagree" />
 					<label for="t_disagree">동의하지 않습니다.</label>
@@ -192,8 +193,22 @@
 				
 				<div id="terms_button">
 					<input type="reset" value="취소하기" />
-					<input type="submit" value="가입하기" />
+					<input type="button" onclick="insertBtn()" value="가입하기" />
 				</div>
+				<script>
+				   function insertBtn(){
+					   // radio 버튼에서 동의합니다 개수를 알림
+					   //alert($("input:radio[class='agree_all']:checked").length);
+					   var agree_num = $("input:radio[class='agree_all']:checked").length;
+					   if(agree_num<3){
+						   alert("모두 동의를 하셔야 다음 단계로 진행가능합니다.");
+						   return;
+					   }else{
+						   alert("다음으로 진행합니다.");
+						   agree.submit();
+					   }
+				   }
+				</script>
 				
 			</form>
 		</section>
