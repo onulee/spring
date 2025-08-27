@@ -122,7 +122,7 @@
 								  url:"/member/idBtn",
 								  method:"post",
 								  data:{"id":id},
-								  dataType:"text",
+								  dataType:"json",
 								  success:function(data){
 									  if(data == "1"){
 										  alert(id+" : 아이디 사용가능");
