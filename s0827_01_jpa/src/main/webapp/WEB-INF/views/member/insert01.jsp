@@ -1,10 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="css/style_header.css">
-		<link rel="stylesheet" type="text/css" href="css/style_join01_terms.css">
-		<link rel="stylesheet" type="text/css" href="css/style_footer.css">
+		<link rel="stylesheet" type="text/css" href="/css/style_header.css">
+		<link rel="stylesheet" type="text/css" href="/css/style_join01_terms.css">
+		<link rel="stylesheet" type="text/css" href="/css/style_footer.css">
 		<title>회원가입 - 약관동의</title>
 	</head>
 	<body>

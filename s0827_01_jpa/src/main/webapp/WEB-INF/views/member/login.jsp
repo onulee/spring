@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/login.css">
+  <script>
+		  if("${flag}"=="1") alert("아이디 또는 패스워드가 일치하지 않습니다.\n로그인을 다시 해주세요.");
+		</script>
 </head>
 
 <body>

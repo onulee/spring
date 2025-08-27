@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.site.dto.Member;
 import com.site.service.MemberService;
@@ -20,13 +21,26 @@ public class MemberController {
 	@Autowired MemberService memberService;
 	@Autowired HttpSession session;
 	
+	@GetMapping("/member/insert") //회원가입 페이지열기
+	public String insert() {
+		return "member/insert01";
+	}
+	
+	@GetMapping("/member/logout") //로그아웃
+	public String logout(RedirectAttributes redirect) {
+		session.invalidate(); //섹션모두삭제
+		redirect.addFlashAttribute("flag","-1");
+		return "redirect:/";
+	}
+	
 	@GetMapping("/member/login") //로그인페이지 열기
 	public String login() {
 		return "member/login";
 	}
 	
 	@PostMapping("/member/login") //로그인 확인
-	public String login(HttpServletResponse response, Member m, Model model) {
+	public String login(HttpServletResponse response, 
+			RedirectAttributes redirect, Member m, Model model) {
 		String url = "";
 		System.out.println("id : "+m.getId());
 		System.out.println("pw : "+m.getPw());
@@ -35,10 +49,14 @@ public class MemberController {
 		Member member = memberService.findByIdAndPw(m.getId(),m.getPw());
 		if(member.getId() == null) {
 			System.out.println("아이디 또는 패스워드가 없습니다. 다시 입력하세요.");
-			url = "/member/login";
+			redirect.addFlashAttribute("flag","1"); // redirect시 변수전달가능
+			url = "redirect:/member/login";
 		}else {
 			System.out.println("로그인 성공.");
-			url = "redirect:/?flag=1";
+			session.setAttribute("session_id", member.getId());
+			session.setAttribute("session_name", member.getName());
+			redirect.addFlashAttribute("flag","1"); // redirect시 변수전달가능
+			url = "redirect:/";
 		}
 		
 		System.out.println("member : "+member);
