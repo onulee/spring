@@ -10,6 +10,9 @@
 		<title>메인 : index</title>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="/css/style_main.css">
+		<script>
+		  if("${flag}"=="1") alert("로그인이 되었습니다.");
+		</script>
 	</head>
 	<body>
 	 	<header>
