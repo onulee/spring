@@ -13,6 +13,8 @@
 		<script>
 		  if("${flag}"=="1") alert("로그인이 되었습니다.");
 		  if("${flag}"=="-1") alert("로그아웃이 되었습니다.");
+		  if("${flag}"=="2") alert("회원정보수정이 완료되었습니다.");
+		  if("${flag}"=="3") alert("회원정보를 삭제했습니다.");
 		</script>
 	</head>
 	<body>

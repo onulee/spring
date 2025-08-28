@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.site.dto.Member;
 import com.site.repository.MemberRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -65,6 +67,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override //회원정보저장
 	public void save(Member m) {
 		memberRepository.save(m); //기본메소드 - Repository 메소드 필요없음.
+	}
+
+	@Override //회원정보 삭제
+	@Transactional // 1개db관련 실행된후, 2번째에서 에러가 나면 rollback;
+	public void delete(String id) {
+		Member member = memberRepository.findById(id).get(); //검색
+		memberRepository.delete(member); //삭제
+		
 	}
 
 	

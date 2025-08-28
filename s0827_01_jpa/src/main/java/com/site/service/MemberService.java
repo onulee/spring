@@ -22,6 +22,9 @@ public interface MemberService {
 	//회원정보저장
 	void save(Member m);
 
+	//회원정보삭제
+	void delete(String id);
+
 	
 	
 
