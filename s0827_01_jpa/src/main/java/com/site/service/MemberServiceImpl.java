@@ -1,6 +1,9 @@
 package com.site.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.site.dto.Member;
@@ -10,6 +13,24 @@ import com.site.repository.MemberRepository;
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired MemberRepository memberRepository;
+	
+	@Override //회원전체리스트
+	public List<Member> findAll() {
+		// 예외처리가 필요없음.
+		// 정렬을 포함할수 있음. - Sort
+		// 정렬
+		List<Member> list = memberRepository.findAll(
+				Sort.by(Sort.Order.desc("gender"),
+				Sort.Order.asc("name"))); //기본메소드 - Repository 메소드 필요없음.
+		
+//		Sort sort = Sort.by(
+//				Sort.Order.asc("gender"),
+//				Sort.Order.desc("name")
+//				);
+//		List<Member> list = memberRepository.findAll(sort); //기본메소드 - Repository 메소드 필요없음.
+		return list;
+	}
+	
 	
 	@Override //id가 존재하는지 확인
 	public Member findById(String id) {
@@ -40,5 +61,12 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findLogin(id,pw).get();
 		return member;
 	}
+
+	@Override //회원정보저장
+	public void save(Member m) {
+		memberRepository.save(m); //기본메소드 - Repository 메소드 필요없음.
+	}
+
+	
 
 }
