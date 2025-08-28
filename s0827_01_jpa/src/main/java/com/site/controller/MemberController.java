@@ -3,6 +3,12 @@ package com.site.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
+import org.springframework.data.web.SortDefault.SortDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,10 +71,31 @@ public class MemberController {
 	
 	
 	@GetMapping("/member/list") //회원정보리스트
-	public String list(Model model) {
-		// List<Member> controller -> service -> serviceImpl -> Jpa
-		List<Member> list = memberService.findAll();
+	public String list(
+			 @PageableDefault(page=0,size=10)
+			 @SortDefaults({ @SortDefault(sort="gender",direction = Sort.Direction.DESC),
+			 @SortDefault(sort="name",direction = Sort.Direction.ASC)
+				}) Pageable pageable,Model model) {
+		
+		// 페이지로 리턴
+		Page<Member> memberPage = memberService.findAll(pageable);
+		
+		List<Member> list = memberPage.getContent(); //페이지 정보없이 List만 가져오기
+		System.out.println(memberPage);
+		int nowPage = memberPage.getPageable().getPageNumber()+1; //현재페이지는 0부터 시작이여서 +1
+		int maxPage = memberPage.getTotalPages()-1; //마지막 페이지
+		int startPage = ((nowPage-1)/10)*10 + 1;
+		int endPage = Math.min(startPage+10-1,memberPage.getTotalPages()-1);
 		model.addAttribute("list",list);
+		model.addAttribute("nowPage",nowPage);
+		model.addAttribute("maxPage",maxPage);
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		
+		
+		// List<Member> controller -> service -> serviceImpl -> Jpa
+//		List<Member> list = memberService.findAll();
+//		model.addAttribute("list",list);
 		return "member/list";
 	}
 	

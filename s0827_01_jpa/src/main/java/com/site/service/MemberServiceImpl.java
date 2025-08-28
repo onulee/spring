@@ -3,6 +3,8 @@ package com.site.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +18,35 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired MemberRepository memberRepository;
 	
+	@Override  //페이지로 리턴받음.
+	public Page<Member> findAll(Pageable pageable) {
+		Page<Member> list = memberRepository.findAll(pageable);
+		return list;
+	}
+	
 	@Override //회원전체리스트
 	public List<Member> findAll() {
-		// 예외처리가 필요없음.
-		// 정렬을 포함할수 있음. - Sort
-		// 정렬
-		List<Member> list = memberRepository.findAll(
-				Sort.by(Sort.Order.desc("gender"),
-				Sort.Order.asc("name"))); //기본메소드 - Repository 메소드 필요없음.
 		
+		// 예외처리가 필요없음.
+		// 1. 정렬이 1개 일때
+		List<Member> list = memberRepository.findAll(
+				Sort.by("name").ascending()
+		);
+		
+		// 2. 정렬이 2개 일때
+//		List<Member> list = memberRepository.findAll(
+//				Sort.by(Sort.Order.desc("gender"),
+//						Sort.Order.asc("name")
+//						)
+//				); 
+		
+		// 3. 정렬을 분리해서 sort 보냄.
 //		Sort sort = Sort.by(
 //				Sort.Order.asc("gender"),
 //				Sort.Order.desc("name")
 //				);
 //		List<Member> list = memberRepository.findAll(sort); //기본메소드 - Repository 메소드 필요없음.
+		
 		return list;
 	}
 	
@@ -76,6 +93,9 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.delete(member); //삭제
 		
 	}
+
+
+	
 
 	
 

@@ -2,6 +2,9 @@ package com.site.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.site.dto.Member;
 
 public interface MemberService {
@@ -24,6 +27,9 @@ public interface MemberService {
 
 	//회원정보삭제
 	void delete(String id);
+
+	// 페이지로 리턴
+	Page<Member> findAll(Pageable pageable);
 
 	
 	

@@ -31,7 +31,7 @@
 	 			    </c:if>
 	 				<li><a href="/board/list">고객행복센터</a></li>
 	 				<li>배송정보검색</li>
-	 				<li><a href="/member/list">회원정보리스트</a></li>
+	 				<li><a href="/member/list?page=2">회원정보리스트</a></li>
 	 			</ul>
 	 		</div>
 	 		<nav>
