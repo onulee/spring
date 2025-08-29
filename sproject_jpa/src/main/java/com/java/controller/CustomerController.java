@@ -3,6 +3,7 @@ package com.java.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,8 +68,13 @@ public class CustomerController {
 	@GetMapping("/customer/list") //게시판리스트
 	public String list(Model model) {
 		//List<Board> controller -> service -> serviceImpl -> Jpa
+		// 정렬
+		Sort sort = Sort.by(
+			Sort.Order.desc("bgroup"),Sort.Order.asc("bstep")
+		);
+		
 		//게시글 전체가져오기
-		List<Board> list = customerService.findAll();
+		List<Board> list = customerService.findAll(sort);
 		System.out.println("list 개수 : "+list.size());
 		model.addAttribute("list",list);
 		return "customer/list";

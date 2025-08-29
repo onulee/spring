@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Builder            //부분생성자
 @AllArgsConstructor //전체생성자
 @NoArgsConstructor  //기본생성자
+//@DynamicInsert      // null값인 데이터 필드를 제외하고 insert
 @Entity             //jpa사용
 @SequenceGenerator(
 		name="board_seq_generator", //시퀀스 제너레이터 이름

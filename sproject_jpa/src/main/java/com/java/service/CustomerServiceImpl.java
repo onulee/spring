@@ -22,12 +22,10 @@ public class CustomerServiceImpl implements CustomerService {
 	//영속성 컨텍스트 - 시퀀스 파일
 //	@PersistenceContext private EntityManager entityManager; 
 	
-	@Override //게시글 전체가져오기
-	public List<Board> findAll() {
+	@Override //게시글 전체가져오기 - 정렬 : bgroup역순정렬, bstep순차정렬
+	public List<Board> findAll(Sort sort) {
 //		Sort sort = Sort.by("id").descending();
-		
-		
-		List<Board> list = customerRepository.findAll();
+		List<Board> list = customerRepository.findAll(sort);
 		return list;
 	}
 
@@ -54,11 +52,10 @@ public class CustomerServiceImpl implements CustomerService {
 		System.out.println("시퀀스 bno : "+b.getBno());
 		// bgroup - 시퀀스번호를 입력
 		b.setBgroup(b.getBno()); 
-		b.setBstep(0);
-		b.setBindent(0);
-		b.setBhit(0);
-		b.setBfile("");
 		b.setBdate(new Timestamp(System.currentTimeMillis()));
+//		b.setBstep(0); //default 0
+//		b.setBindent(0);
+//		b.setBhit(0);
 		
 		// entityManager 사용방법
 //		entityManager.persist(b); // 1차캐쉬 - 임시적으로 파일저장
