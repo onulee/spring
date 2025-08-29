@@ -28,11 +28,15 @@
 <script type="text/javascript" src="/js/respond.min.js"></script>
 <![endif]-->
 <script type="text/javascript">
-$(document).ready(function() {
+	if("${session_id}" == ""){
+		alert("로그인을 하셔야 글쓰기가 가능합니다.");
+		location.href = "/member/login";
+	}
 	
-
-
-});
+	function writeBtn(){
+		//alert("경고");
+		writeFrm.submit();
+	}
 </script>
 </head>
 <body>
@@ -214,56 +218,55 @@ $(document).ready(function() {
 			<div id="contents">
 				<div id="mypage">
 					<h2><strong>NOTICE</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
-					
-					<div class="checkDivTab">
-						<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
-							<caption>포토 구매후기 작성</caption>
-							<colgroup>
-							<col width="19%" class="tw30" />
-							<col width="*" />
-							</colgroup>
-							<tbody>
-								<tr>
-									<th scope="row"><span>제목</span></th>
-									<td>
-										<input type="text" class="wlong" />
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><span>작성자</span></th>
-									<td>
-										<input type="text" class="wlong" name="name" value="${session_name }" readonly />
-										<input type="hidden" class="wlong" name="id" value="${session_id}" />
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><span>상세 내용</span></th>
-									<td>
-										<textarea class="tta"></textarea>
-									</td>
-								</tr>	
-								<tr>
-									<th scope="row"><span>파일첨부</span></th>
-									<td>
-										<input type="file" class="fileType" />
-									</td>
-								</tr>
-															
-							</tbody>
-						</table>
-					</div>
-
-					<!-- Btn Area -->
-					<div class="btnArea">
-						<div class="bCenter">
-							<ul>																
-								<li><a href="#" class="nbtnbig">취소</a></li>
-								<li><a href="#" class="sbtnMini">확인</a></li>
-							</ul>
+					<form action="/customer/write" method="post" name="writeFrm">
+						<div class="checkDivTab">
+							<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
+								<caption>포토 구매후기 작성</caption>
+								<colgroup>
+								<col width="19%" class="tw30" />
+								<col width="*" />
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row"><span>제목</span></th>
+										<td>
+											<input type="text" class="wlong" name="btitle" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>작성자</span></th>
+										<td>
+											<input type="text" class="wlong" name="name" value="${session_name }" readonly />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>상세 내용</span></th>
+										<td>
+											<textarea class="tta" name="bcontent"></textarea>
+										</td>
+									</tr>	
+									<tr>
+										<th scope="row"><span>파일첨부</span></th>
+										<td>
+											<input type="file" name="file" class="fileType" />
+										</td>
+									</tr>
+																
+								</tbody>
+							</table>
 						</div>
-					</div>
-					<!-- //Btn Area -->
-					
+	
+						<!-- Btn Area -->
+						<div class="btnArea">
+							<div class="bCenter">
+								<ul>																
+									<li><a class="nbtnbig" onclick="location.href='/customer/list'" >취소</a></li>
+									<li><a class="sbtnMini" onclick="writeBtn()">확인</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- //Btn Area -->
+					</form>
 				</div>
 			</div>
 			<!-- //contents -->

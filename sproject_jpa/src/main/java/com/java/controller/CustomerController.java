@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.java.dto.Board;
+import com.java.dto.Member;
 import com.java.service.CustomerService;
+import com.java.service.MemberService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,10 +20,23 @@ import jakarta.servlet.http.HttpSession;
 public class CustomerController {
 
 	@Autowired CustomerService customerService;
+	@Autowired MemberService memberService;
 	@Autowired HttpSession session;
 	
-	@GetMapping("/customer/write")
+	@GetMapping("/customer/write") //글쓰기 페이지열기
 	public String write() {
+		return "customer/write";
+	}
+	
+	@PostMapping("/customer/write") //글쓰기 저장
+	public String write( Board b,RedirectAttributes redirect ) {
+		System.out.println("b title : "+b.getBtitle());
+		System.out.println("b content : "+b.getBcontent());
+		//System.out.println("b member id : "+b.getMember().getId());
+	    String id = (String) session.getAttribute("session_id");
+	    Member member = memberService.findById(id);
+	    b.setMember(member); //글쓰기가 가능함. - member객체가 아니면 글쓰기가 안됨.
+		
 		return "customer/write";
 	}
 	
