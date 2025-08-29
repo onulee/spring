@@ -22,11 +22,10 @@
 <script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.anchor.js"></script>
-<!--[if lt IE 9]>
-<script type="text/javascript" src="/js/html5.js"></script>
-<script type="text/javascript" src="/js/respond.min.js"></script>
-<![endif]-->
+
 <script type="text/javascript">
+if("${flag}" == "1") alert("로그인이 되었습니다.");
+
 $(document).ready(function() {
 	
 	var mySwiper = new Swiper('#mainRoll',{
