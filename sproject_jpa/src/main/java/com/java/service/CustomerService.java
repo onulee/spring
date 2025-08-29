@@ -3,6 +3,7 @@ package com.java.service;
 import java.util.List;
 
 import com.java.dto.Board;
+import com.java.dto.Member;
 
 public interface CustomerService {
 
@@ -13,6 +14,9 @@ public interface CustomerService {
 	Board findByBno(int bno);
 
 	//게시글 삭제
-	void delete(int bno);
+	void deleteById(int bno);
+
+	//글쓰기 저장
+	void save(Board b);
 
 }

@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,10 +25,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //전체생성자
 @NoArgsConstructor  //기본생성자
 @Entity             //jpa사용
+@SequenceGenerator(
+		name="board_seq_generator", //시퀀스 제너레이터 이름
+		sequenceName = "board_seq", //시퀀스이름
+		initialValue = 101, //시작값
+		allocationSize = 1 //메모리를 통한 할당범위
+		)
 public class Board {
 	
 	@Id //기본키 - oracle : sequence사용
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //DB제공되는 넘버링전략을 따라감.
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+	generator = "board_seq_generator" ) //DB제공되는 넘버링전략을 따라감.
 	private int bno;
 	@Column(nullable = false,length = 1000)
 	private String btitle;

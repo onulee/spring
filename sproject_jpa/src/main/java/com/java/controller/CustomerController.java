@@ -30,14 +30,14 @@ public class CustomerController {
 	
 	@PostMapping("/customer/write") //글쓰기 저장
 	public String write( Board b,RedirectAttributes redirect ) {
-		System.out.println("b title : "+b.getBtitle());
-		System.out.println("b content : "+b.getBcontent());
-		//System.out.println("b member id : "+b.getMember().getId());
 	    String id = (String) session.getAttribute("session_id");
+	    //글쓰기가 가능함. - member객체가 아니면 글쓰기가 안됨.
 	    Member member = memberService.findById(id);
-	    b.setMember(member); //글쓰기가 가능함. - member객체가 아니면 글쓰기가 안됨.
-		
-		return "customer/write";
+	    b.setMember(member); 
+		//저장
+	    customerService.save(b);
+	    redirect.addFlashAttribute("flag","1");
+		return "redirect:/customer/list";
 	}
 	
 	@GetMapping("/customer/delete") //게시글 삭제
@@ -46,7 +46,7 @@ public class CustomerController {
 		System.out.println("controller delete bno : "+b.getBno());
 		// 게시글삭제
 		if(session.getAttribute("session_id") != null) {
-			customerService.delete(b.getBno());
+			customerService.deleteById(b.getBno());
 			redirect.addFlashAttribute("flag","-1");
 			return "redirect:/customer/list";
 		}else {
