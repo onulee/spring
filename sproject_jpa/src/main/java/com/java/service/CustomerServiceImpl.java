@@ -27,7 +27,6 @@ public class CustomerServiceImpl implements CustomerService {
 			return new IllegalArgumentException("해당되는 게시글이 존재하지 않습니다."); 
 		 }
 		);
-		
 		return board;
 	}
 

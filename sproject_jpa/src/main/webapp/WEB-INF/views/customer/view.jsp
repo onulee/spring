@@ -23,16 +23,14 @@
 <script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.anchor.js"></script>
-<!--[if lt IE 9]>
-<script type="text/javascript" src="/js/html5.js"></script>
-<script type="text/javascript" src="/js/respond.min.js"></script>
-<![endif]-->
 <script type="text/javascript">
-$(document).ready(function() {
-	
+	//게시글 삭제
+	function deleteBtn(){
+		if(confirm("${board.bno} 번 게시글을 삭제하시겠습니까?")){
+			location.href="/customer/delete?bno=${board.bno}&id=${board.member.id}";
+		}
+	}
 
-
-});
 </script>
 </head>
 <body>
@@ -273,7 +271,14 @@ $(document).ready(function() {
 					<div class="btnArea btline">
 						<div class="bRight">
 							<ul>
-								<li><a href="#" class="sbtnMini mw">목록</a></li>
+							    <c:if test="${session_id != null }">
+									<li><a href="/customer/list" class="sbtnMini mw">답변달기</a></li>
+									<c:if test="${session_id == board.member.id }">
+										<li><a href="/customer/list" class="sbtnMini mw">수정</a></li>
+										<li><a onclick="deleteBtn()" class="sbtnMini mw">삭제</a></li>
+									</c:if>
+							    </c:if>
+								<li><a href="/customer/list" class="sbtnMini mw">목록</a></li>
 							</ul>
 						</div>
 					</div>

@@ -28,11 +28,7 @@
 <script type="text/javascript" src="/js/respond.min.js"></script>
 <![endif]-->
 <script type="text/javascript">
-$(document).ready(function() {
-	
-
-
-});
+if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
 </script>
 </head>
 <body>
@@ -94,7 +90,9 @@ $(document).ready(function() {
 	<div id="header">
 		
 		<div id="snbBox">
-			<h1><img src="/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			<a href="/">
+				<h1><img src="/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			</a>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
