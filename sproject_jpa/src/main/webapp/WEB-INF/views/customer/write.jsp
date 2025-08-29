@@ -28,7 +28,11 @@
 <script type="text/javascript" src="/js/respond.min.js"></script>
 <![endif]-->
 <script type="text/javascript">
-if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
+$(document).ready(function() {
+	
+
+
+});
 </script>
 </head>
 <body>
@@ -90,9 +94,7 @@ if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
 	<div id="header">
 		
 		<div id="snbBox">
-			<a href="/">
-				<h1><img src="/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
-			</a>
+			<h1><img src="/images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
@@ -206,94 +208,66 @@ if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
 					<li class="last"><a href="#" id="leftNavi4">이용안내</a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(1,0);</script>
-
+			
 
 			<!-- contents -->
 			<div id="contents">
-				<div id="customer">
+				<div id="mypage">
 					<h2><strong>NOTICE</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
 					
-					<div class="orderDivMt">
-						<table summary="NO, 제목, 등록일, 조회수 순으로 공지사항을 조회 하실수 있습니다." class="orderTable2" border="1" cellspacing="0">
-							<caption>공지사항 보기</caption>
+					<div class="checkDivTab">
+						<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
+							<caption>포토 구매후기 작성</caption>
 							<colgroup>
-							<col width="10%" class="tnone" />
+							<col width="19%" class="tw30" />
 							<col width="*" />
-							<col width="14%" class="tw25" />
-							<col width="14%" class="tw25" />
-							<col width="14%" class="tnone" />
 							</colgroup>
-							<thead>
-								<th scope="col" class="tnone">NO.</th>
-								<th scope="col">제목</th>
-								<th scope="col">작성자</th>
-								<th scope="col">작성일</th>
-								<th scope="col" class="tnone">조회수</th>
-							</thead>
 							<tbody>
-								<c:forEach var="board" items="${list}">
 								<tr>
-									<td class="tnone">${board.bno}</td>
-									<td class="left">
-										<a href="/customer/view?bno=${board.bno}">${board.btitle}</a>
-										<img src="/images/ico/ico_new.gif" alt="NEW" />
-									</td>
-									<td>${board.member.name }</td>
+									<th scope="row"><span>제목</span></th>
 									<td>
-									  <fmt:formatDate value="${board.bdate}" pattern="yyyy-MM-dd"/>
+										<input type="text" class="wlong" />
 									</td>
-									<td class="tnone right">${board.bhit}</td>
 								</tr>
-								</c:forEach>
-
+								<tr>
+									<th scope="row"><span>작성자</span></th>
+									<td>
+										<input type="text" class="wlong" name="name" value="${session_name }" readonly />
+										<input type="hidden" class="wlong" name="id" value="${session_id}" />
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span>상세 내용</span></th>
+									<td>
+										<textarea class="tta"></textarea>
+									</td>
+								</tr>	
+								<tr>
+									<th scope="row"><span>파일첨부</span></th>
+									<td>
+										<input type="file" class="fileType" />
+									</td>
+								</tr>
+															
 							</tbody>
 						</table>
 					</div>
-						
 
-
-					<div class="btnAreaList">
-					    <div class="bwright">
-							<ul>
-								<li><a href="/customer/write" class="sbtnMini">글쓰기</a></li>
-							</ul>
-						</div>
-						<!-- 페이징이동1 -->
-						<div class="allPageMoving1">
-
-						<a href="#" class="n"><img src="/images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="/images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
-						<strong>1</strong>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-						<a href="#" class="next"><img src="/images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
-
-						</div>
-						<!-- //페이징이동1 -->
-					</div>
-
-					<div class="searchWrap">
-						<div class="search">
-							<ul>
-								<li class="web"><img src="/images/txt/txt_search.gif" alt="search" /></li>
-								<li class="se">
-									<select>
-										<option value="" />제목</option>
-									</select>
-								</li>
-								<li><input type="text" class="searchInput" /></li>
-								<li class="web"><a href="#"><img src="/images/btn/btn_search.gif" alt="검색" /></a></li>
-								<li class="mobile"><a href="#"><img src="/images/btn/btn_search_m.gif" alt="검색" /></a></li>
+					<!-- Btn Area -->
+					<div class="btnArea">
+						<div class="bCenter">
+							<ul>																
+								<li><a href="#" class="nbtnbig">취소</a></li>
+								<li><a href="#" class="sbtnMini">확인</a></li>
 							</ul>
 						</div>
 					</div>
-					<!-- //포토 구매후기 -->
-
-
+					<!-- //Btn Area -->
+					
 				</div>
 			</div>
 			<!-- //contents -->
+
 
 		</div>
 	</div>

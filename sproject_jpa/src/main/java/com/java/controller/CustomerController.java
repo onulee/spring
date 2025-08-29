@@ -19,14 +19,18 @@ public class CustomerController {
 	@Autowired CustomerService customerService;
 	@Autowired HttpSession session;
 	
+	@GetMapping("/customer/write")
+	public String write() {
+		return "customer/write";
+	}
+	
 	@GetMapping("/customer/delete") //게시글 삭제
 	public String delete(Board b,RedirectAttributes redirect,
 			Model model) {
 		System.out.println("controller delete bno : "+b.getBno());
-		// 섹션이 null이 아닐때 삭제가능
+		// 게시글삭제
 		if(session.getAttribute("session_id") != null) {
-			// session_id 삭제하려는 게시글 id와 같은지 비교
-			
+			customerService.delete(b.getBno());
 			redirect.addFlashAttribute("flag","-1");
 			return "redirect:/customer/list";
 		}else {

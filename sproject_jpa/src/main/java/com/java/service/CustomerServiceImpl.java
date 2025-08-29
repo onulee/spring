@@ -30,4 +30,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return board;
 	}
 
+	@Override //게시글삭제
+	public void delete(int bno) {
+		Board board = customerRepository.findById(bno).get();
+		customerRepository.delete(board);
+	}
+
 }

@@ -27,7 +27,7 @@
 	//게시글 삭제
 	function deleteBtn(){
 		if(confirm("${board.bno} 번 게시글을 삭제하시겠습니까?")){
-			location.href="/customer/delete?bno=${board.bno}&id=${board.member.id}";
+			location.href="/customer/delete?bno=${board.bno}";
 		}
 	}
 

@@ -12,4 +12,7 @@ public interface CustomerService {
 	//게시글 1개 가져오기
 	Board findByBno(int bno);
 
+	//게시글 삭제
+	void delete(int bno);
+
 }
