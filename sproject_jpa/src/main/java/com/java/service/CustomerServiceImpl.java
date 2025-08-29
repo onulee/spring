@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired CustomerRepository customerRepository;
 	//영속성 컨텍스트 - 시퀀스 파일
-	@PersistenceContext private EntityManager entityManager; 
+//	@PersistenceContext private EntityManager entityManager; 
 	
 	@Override //게시글 전체가져오기
 	public List<Board> findAll() {
@@ -50,8 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional  // 1번째부터 마지막까지 정상적으로 완료되어야 최종DB에 저장시켜줌
 	@Override //글쓰기 저장
 	public void save(Board b) {
-		
-		entityManager.persist(b); // 1차캐쉬 - 임시적으로 파일저장
+		Board board = customerRepository.save(b);
 		System.out.println("시퀀스 bno : "+b.getBno());
 		// bgroup - 시퀀스번호를 입력
 		b.setBgroup(b.getBno()); 
@@ -60,7 +59,18 @@ public class CustomerServiceImpl implements CustomerService {
 		b.setBhit(0);
 		b.setBfile("");
 		b.setBdate(new Timestamp(System.currentTimeMillis()));
-		customerRepository.save(b); //기본메소드
+		
+		// entityManager 사용방법
+//		entityManager.persist(b); // 1차캐쉬 - 임시적으로 파일저장
+//		System.out.println("시퀀스 bno : "+b.getBno());
+//		// bgroup - 시퀀스번호를 입력
+//		b.setBgroup(b.getBno()); 
+//		b.setBstep(0);
+//		b.setBindent(0);
+//		b.setBhit(0);
+//		b.setBfile("");
+//		b.setBdate(new Timestamp(System.currentTimeMillis()));
+//		customerRepository.save(b); //기본메소드
 	}
 
 }
