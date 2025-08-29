@@ -237,7 +237,7 @@ $(document).ready(function() {
 								<tr>
 									<td class="tnone">${board.bno}</td>
 									<td class="left">
-										<a href="/board/view?bno=${board.bno}">${board.btitle}</a>
+										<a href="/customer/view?bno=${board.bno}">${board.btitle}</a>
 										<img src="/images/ico/ico_new.gif" alt="NEW" />
 									</td>
 									<td>${board.member.name }</td>

@@ -22,6 +22,12 @@ public class MemberController {
 	public String login() {
 		return "/member/login";
 	}
+	@GetMapping("/member/logout") //로그아웃
+	public String logout(RedirectAttributes redirect) {
+		session.invalidate();
+		redirect.addFlashAttribute("flag","-1");
+		return "redirect:/";
+	}
 	@PostMapping("/member/login") // 로그인 확인
 	public String login(
 			RedirectAttributes redirect, //redirect 변수전달
@@ -33,14 +39,18 @@ public class MemberController {
 		System.out.println("controller pw : "+m.getPw());
 		// controller -> service -> serviceImpl -> Jpa
 		Member member = memberService.findByIdAndPw(m.getId(),m.getPw());
-		if(member.getId()==null) {
+		if(member == null) {
 			System.out.println("아이디 또는 패스워드가 일치하지 않습니다.");
 			redirect.addFlashAttribute("flag","-1");
-			return "redirect:/member/login/";
+			redirectUrl = "redirect:/member/login";
 		}else {
+			System.out.println("로그인이 되었습니다.");
+			session.setAttribute("session_id", member.getId());
+			session.setAttribute("session_name", member.getName());
 			redirect.addFlashAttribute("flag","1");
-			return "redirect:/";
+			redirectUrl = "redirect:/";
 		}
+		return redirectUrl;
 		
 	}
 }

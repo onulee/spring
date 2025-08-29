@@ -15,6 +15,15 @@ public class CustomerController {
 
 	@Autowired CustomerService customerService;
 	
+	@GetMapping("/customer/view") //상세페이지 열기
+	public String view(Board b, Model model) {
+		System.out.println("controller bno : "+b.getBno());
+		Board board = customerService.findByBno(b.getBno());
+		model.addAttribute("board",board);
+		return "customer/view";
+	}
+	
+	
 	@GetMapping("/customer/list")
 	public String list(Model model) {
 		//List<Board> controller -> service -> serviceImpl -> Jpa

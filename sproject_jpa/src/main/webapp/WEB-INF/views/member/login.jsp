@@ -25,6 +25,8 @@
 <script type="text/javascript" src="/js/jquery.anchor.js"></script>
 
 <script type="text/javascript">
+if("${flag}" == "-1") alert("아이디 또는 패스워드가 일치하지 않습니다.\n다시 로그인해주세요.");
+
    function loginBtn(){
 	   if($("#id").val().length<1 || $("#pw").val().length<1){
 		 alert("아이디 또는 패스워드를 입력하셔야 로그인이 가능합니다.");

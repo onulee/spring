@@ -9,4 +9,7 @@ public interface CustomerService {
 	//게시글 전체가져오기
 	List<Board> findAll();
 
+	//게시글 1개 가져오기
+	Board findByBno(int bno);
+
 }
