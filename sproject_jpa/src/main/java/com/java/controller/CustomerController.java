@@ -45,6 +45,12 @@ public class CustomerController {
 	@PostMapping("/customer/update") //수정 저장
 	public String update(Board b, @RequestPart("file") MultipartFile file,
 			RedirectAttributes redirect, Model model) throws Exception {
+		
+		// Board board 불러옴. - 불러와서 진행
+		Board board = customerService.findByBno(b.getBno());
+		
+		
+		
 		// bno,btitle,bcontent,file
 		if(!file.isEmpty()) {
 			String originFileName = file.getOriginalFilename();
