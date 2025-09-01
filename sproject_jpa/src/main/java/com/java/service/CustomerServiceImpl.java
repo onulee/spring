@@ -41,6 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Board findByBno(int bno) {
+		// 조회수 1증가
+		customerRepository.updateHit(bno);
 		// .get():에러처리안함 .orElseGet():빈객체처리 .roElseThrow():예외처리
 		Board board = customerRepository.findById(bno).orElseThrow(
 		 () -> { 
@@ -86,8 +88,6 @@ public class CustomerServiceImpl implements CustomerService {
 		// 기존의 답변달기 되어 있는 게시글의 bstep을 모두 1증가 시켜줘야 함.
 		//update board set bstep=bstep+1 where bgroup=#{bgroup} and bstep>#{bstep}
 		customerRepository.reply(b.getBgroup(),b.getBstep());
-		
-		
 		
 		b.setBstep(b.getBstep()+1);
 		b.setBindent(b.getBindent()+1);

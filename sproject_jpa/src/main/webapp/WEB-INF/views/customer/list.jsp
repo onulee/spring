@@ -31,6 +31,7 @@
 	if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
 	if("${flag}" == "1") alert("게시글이 등록 되었습니다.");
 	if("${flag}" == "2") alert("게시글이 수정 되었습니다.");
+	if("${flag}" == "3") alert("답변달기가 등록 되었습니다.");
 </script>
 </head>
 <body>
@@ -237,7 +238,10 @@
 								<tr>
 									<td class="tnone">${board.bno}</td>
 									<td class="left">
-										<a href="/customer/view?bno=${board.bno}">${board.btitle}</a>
+										<a href="/customer/view?bno=${board.bno}">
+										<c:forEach var="j" begin="1" end="${board.bindent}">▶</c:forEach>
+										${board.btitle}
+										</a>
 										<img src="/images/ico/ico_new.gif" alt="NEW" />
 									</td>
 									<td>${board.member.name }</td>

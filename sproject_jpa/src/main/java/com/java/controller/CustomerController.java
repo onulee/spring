@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class CustomerController {
 	@GetMapping("/customer/reply") //답변달기페이지 열기
 	public String reply(Board b,Model model) {
 		Board board = customerService.findByBno(b.getBno());
+		System.out.println("controller bgroup : "+board.getBgroup());
 		model.addAttribute("board",board);  //bgroup,bstep,bindent
 		return "customer/reply";
 	}
@@ -163,12 +165,11 @@ public class CustomerController {
 		
 	}
 	
+	@Transactional
 	@GetMapping("/customer/view") //상세페이지 열기
 	public String view(Board b, Model model) {
 		System.out.println("controller bno : "+b.getBno());
 		Board board = customerService.findByBno(b.getBno());
-		board.setBhit(board.getBhit()+1); //조회수 1증가
-		customerService.save(board);
 		model.addAttribute("board",board);
 		return "customer/view";
 	}
