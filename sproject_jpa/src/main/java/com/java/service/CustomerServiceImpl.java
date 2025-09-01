@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired CustomerRepository customerRepository;
 	//영속성 컨텍스트 - 시퀀스 파일
 //	@PersistenceContext private EntityManager entityManager; 
+	
+	
+	@Override //게시글 전체가져오기 - 현재페이지, 페이지당 개수
+	public Page<Board> findAll(Pageable pageable) {
+		Page<Board> pageList = customerRepository.findAll(pageable);
+		return pageList;
+	}
+	
 	
 	@Override //게시글 전체가져오기 - 정렬 : bgroup역순정렬, bstep순차정렬
 	public List<Board> findAll(Sort sort) {
@@ -69,5 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 //		b.setBdate(new Timestamp(System.currentTimeMillis()));
 //		customerRepository.save(b); //기본메소드
 	}
+
+	
 
 }
