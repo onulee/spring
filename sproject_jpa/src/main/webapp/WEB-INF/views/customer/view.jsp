@@ -272,9 +272,9 @@
 						<div class="bRight">
 							<ul>
 							    <c:if test="${session_id != null }">
-									<li><a href="/customer/list" class="sbtnMini mw">답변달기</a></li>
+									<li><a href="/customer/reply?bno=${board.bno}" class="sbtnMini mw">답변달기</a></li>
 									<c:if test="${session_id == board.member.id }">
-										<li><a href="/customer/list" class="sbtnMini mw">수정</a></li>
+										<li><a href="/customer/update?bno=${board.bno}" class="sbtnMini mw">수정</a></li>
 										<li><a onclick="deleteBtn()" class="sbtnMini mw">삭제</a></li>
 									</c:if>
 							    </c:if>

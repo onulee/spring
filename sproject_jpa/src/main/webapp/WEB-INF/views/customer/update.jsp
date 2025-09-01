@@ -33,9 +33,8 @@
 		location.href = "/member/login";
 	}
 	
-	function writeBtn(){
-		//alert("경고");
-		writeFrm.submit();
+	function updateBtn(){
+		updateFrm.submit();
 	}
 </script>
 </head>
@@ -218,10 +217,10 @@
 			<div id="contents">
 				<div id="mypage">
 					<h2><strong>NOTICE</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
-					<form action="/customer/write" method="post" name="writeFrm" enctype="multipart-formdata">
+					<form action="/customer/update" method="post" name="updateFrm">
 						<div class="checkDivTab">
 							<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
-								<caption>포토 구매후기 작성</caption>
+								<caption>게시판 수정</caption>
 								<colgroup>
 								<col width="19%" class="tw30" />
 								<col width="*" />
@@ -230,7 +229,7 @@
 									<tr>
 										<th scope="row"><span>제목</span></th>
 										<td>
-											<input type="text" class="wlong" name="btitle" />
+											<input type="text" class="wlong" name="btitle" value="${board.btitle}" />
 										</td>
 									</tr>
 									<tr>
@@ -242,13 +241,24 @@
 									<tr>
 										<th scope="row"><span>상세 내용</span></th>
 										<td>
-											<textarea class="tta" name="bcontent"></textarea>
+											<textarea class="tta" name="bcontent">${board.bcontent}</textarea>
 										</td>
 									</tr>	
 									<tr>
 										<th scope="row"><span>파일첨부</span></th>
 										<td>
 											<input type="file" name="file" class="fileType" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>이미지</span></th>
+										<td>
+											<c:if test="${bfile !=null }">
+											  <img src="/${bfile}">
+											</c:if>
+											<c:if test="${bfile ==null }">
+											  해당 이미지가 없습니다.
+											</c:if>
 										</td>
 									</tr>
 																
@@ -261,7 +271,7 @@
 							<div class="bCenter">
 								<ul>																
 									<li><a class="nbtnbig" onclick="location.href='/customer/list'" >취소</a></li>
-									<li><a class="sbtnMini" onclick="writeBtn()">확인</a></li>
+									<li><a class="sbtnMini" onclick="updateBtn()">확인</a></li>
 								</ul>
 							</div>
 						</div>

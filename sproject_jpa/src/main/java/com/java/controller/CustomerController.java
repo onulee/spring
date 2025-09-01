@@ -29,6 +29,13 @@ public class CustomerController {
 	@Autowired MemberService memberService;
 	@Autowired HttpSession session;
 	
+	@GetMapping("/customer/update") //수정페이지 열기
+	public String update(Board b, Model model) {
+		Board board = customerService.findByBno(b.getBno());
+		model.addAttribute("board",board);
+		return "customer/update";
+	}
+	
 	@GetMapping("/customer/write") //글쓰기 페이지열기
 	public String write() {
 		return "customer/write";
