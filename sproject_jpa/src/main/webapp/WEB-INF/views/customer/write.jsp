@@ -248,9 +248,30 @@
 									<tr>
 										<th scope="row"><span>파일첨부</span></th>
 										<td>
-											<input type="file" name="file" class="fileType" />
+											<input type="file" name="file" class="fileType" onchange="readUrl(this);" />
 										</td>
 									</tr>
+									<tr>
+										<th scope="row"><span>이미지보기</span></th>
+										<td>
+											<img id="preview" src="" width="300px">
+										</td>
+									</tr>
+									<script>
+									   function readUrl(input){
+										   if (input.files && input.files[0]) { //input type="file"
+											    var reader = new FileReader();
+											    reader.onload = function(e) {
+											      document.getElementById('preview').src = e.target.result;
+											    };
+											    reader.readAsDataURL(input.files[0]);
+											  } else {
+											    document.getElementById('preview').src = "";
+											  }
+
+									   }
+									
+									</script>
 																
 								</tbody>
 							</table>

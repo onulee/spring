@@ -30,6 +30,7 @@
 <script type="text/javascript">
 	if("${flag}" == "-1") alert("게시글이 삭제 되었습니다.");
 	if("${flag}" == "1") alert("게시글이 등록 되었습니다.");
+	if("${flag}" == "2") alert("게시글이 수정 되었습니다.");
 </script>
 </head>
 <body>

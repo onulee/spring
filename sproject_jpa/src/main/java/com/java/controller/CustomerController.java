@@ -2,7 +2,9 @@ package com.java.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,33 @@ public class CustomerController {
 		Board board = customerService.findByBno(b.getBno());
 		model.addAttribute("board",board);
 		return "customer/update";
+	}
+	
+	@PostMapping("/customer/update") //수정 저장
+	public String update(Board b, @RequestPart("file") MultipartFile file,
+			RedirectAttributes redirect, Model model) throws Exception {
+		// bno,btitle,bcontent,file
+		if(!file.isEmpty()) {
+			String originFileName = file.getOriginalFilename();
+			long time = System.currentTimeMillis();
+			String uploadFileName = String.format("%d_%s", time,originFileName);
+			String fileUrl = "c:/upload/";
+	    	File f = new File(fileUrl+uploadFileName);
+	    	//파일업로드 진행
+			file.transferTo(f);
+			b.setBfile(uploadFileName); // 파일이름을 Board저장
+			// 파일이름 중복방지방법
+			//UUID uuid = UUID.randomUUID(); //487297927495728945729847592
+			//String uploadFileName = String.format("%s_%s", uuid,originFileName);
+		}
+		// 변경날짜
+		b.setBdate(new Timestamp(System.currentTimeMillis()));
+		Member member = memberService.findById((String)session.getAttribute("session_id"));
+		// 회원정보
+		b.setMember(member);
+		customerService.save(b);
+		redirect.addFlashAttribute("flag",1);
+		return "redirect:/customer/view?bno="+b.getBno();
 	}
 	
 	@GetMapping("/customer/write") //글쓰기 페이지열기

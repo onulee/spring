@@ -217,7 +217,8 @@
 			<div id="contents">
 				<div id="mypage">
 					<h2><strong>NOTICE</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
-					<form action="/customer/update" method="post" name="updateFrm">
+					<form action="/customer/update" method="post" name="updateFrm" enctype="multipart/form-data">
+					    <input type="hidden" name="bno" value="${board.bno}" />
 						<div class="checkDivTab">
 							<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
 								<caption>게시판 수정</caption>
@@ -253,10 +254,10 @@
 									<tr>
 										<th scope="row"><span>이미지</span></th>
 										<td>
-											<c:if test="${bfile !=null }">
-											  <img src="/${bfile}">
+											<c:if test="${board.bfile !=null }">
+											  <img src="/upload/${board.bfile}" width="200px">
 											</c:if>
-											<c:if test="${bfile ==null }">
+											<c:if test="${board.bfile ==null }">
 											  해당 이미지가 없습니다.
 											</c:if>
 										</td>
