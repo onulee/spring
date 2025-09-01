@@ -12,7 +12,7 @@ public class fileUpload_config implements WebMvcConfigurer {
 		//URL 링크가 /upload/ 들어오면 c:upload 폴더에서 찾음
 		// 설정이 없으면 무조건 static 에서 찾게 됨.
 		registry.addResourceHandler("/upload/**")
-		.addResourceLocations("file:///c:upload/");
+		.addResourceLocations("file:///c:/upload/");
 		
 	}
 }

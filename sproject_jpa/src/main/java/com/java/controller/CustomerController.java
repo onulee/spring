@@ -1,5 +1,7 @@
 package com.java.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.java.dto.Board;
@@ -42,12 +46,32 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/customer/write") //글쓰기 저장
-	public String write( Board b,RedirectAttributes redirect ) {
+	public String write( Board b,
+			@RequestPart("file") MultipartFile file,
+			RedirectAttributes redirect ) {
 	    String id = (String) session.getAttribute("session_id");
 	    //글쓰기가 가능함. - member객체가 아니면 글쓰기가 안됨.
 	    Member member = memberService.findById(id);
 	    b.setMember(member); 
-		//저장
+		//파일저장
+	    if(!file.isEmpty()) {
+	    	String originFileName = file.getOriginalFilename();
+	    	// 이름중복방지를 위한 이름변경 - 밀리세컨드을 추가
+	    	long time = System.currentTimeMillis();
+	    	String uploadFileName = String.format("%d_%s", time,originFileName);
+	    	System.out.println("uploadFileName : " + uploadFileName);
+	    	
+	    	// 39871398741937413_1.jpg
+	    	// 파일저장 위치
+	    	String fileUrl = "c:/upload/";
+	    	File f = new File(fileUrl+uploadFileName);
+	    	//파일업로드 진행
+	    	try {
+				file.transferTo(f);
+				b.setBfile(uploadFileName); // 파일이름을 Board저장
+			} catch (Exception e) {e.printStackTrace();}
+	    }
+	    // 게시글 저장 
 	    customerService.save(b);
 	    redirect.addFlashAttribute("flag","1");
 		return "redirect:/customer/list";
