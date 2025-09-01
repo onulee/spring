@@ -80,6 +80,21 @@ public class CustomerServiceImpl implements CustomerService {
 //		customerRepository.save(b); //기본메소드
 	}
 
+
+	@Override // 답변달기 저장
+	public void reply(Board b) {
+		// 기존의 답변달기 되어 있는 게시글의 bstep을 모두 1증가 시켜줘야 함.
+		//update board set bstep=bstep+1 where bgroup=#{bgroup} and bstep>#{bstep}
+		customerRepository.reply(b.getBgroup(),b.getBstep());
+		
+		
+		
+		b.setBstep(b.getBstep()+1);
+		b.setBindent(b.getBindent()+1);
+		customerRepository.save(b);
+		
+	}
+
 	
 
 }

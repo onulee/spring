@@ -23,16 +23,19 @@
 <script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.anchor.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/js/html5.js"></script>
+<script type="text/javascript" src="/js/respond.min.js"></script>
+<![endif]-->
 <script type="text/javascript">
-	if("${flag}" == "1") alert("게시글이 수정 되었습니다.");
-	
-	//게시글 삭제
-	function deleteBtn(){
-		if(confirm("${board.bno} 번 게시글을 삭제하시겠습니까?")){
-			location.href="/customer/delete?bno=${board.bno}";
-		}
+	if("${session_id}" == ""){
+		alert("로그인을 하셔야 글쓰기가 가능합니다.");
+		location.href = "/member/login";
 	}
-
+	
+	function replyBtn(){
+		replyFrm.submit();
+	}
 </script>
 </head>
 <body>
@@ -208,89 +211,91 @@
 					<li class="last"><a href="#" id="leftNavi4">이용안내</a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(1,0);</script>
-
+			
 
 			<!-- contents -->
 			<div id="contents">
-				<div id="customer">
+				<div id="mypage">
 					<h2><strong>NOTICE</strong><span>쟈뎅샵 소식을 전해드립니다.</span></h2>
+					<form action="/customer/reply" method="post" name="replyFrm" enctype="multipart/form-data">
+					<input type="hidden" name="bgroup" value="${board.bgroup}">
+					<input type="hidden" name="bstep" value="${board.bstep}">
+					<input type="hidden" name="bindent" value="${board.bindent}">
+						<div class="checkDivTab">
+							<table summary="분류, 구매여부, 작은이미지, 평가, 제목, 상세 내용 순으로 포토 구매후기를 작성 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
+								<caption>포토 구매후기 작성</caption>
+								<colgroup>
+								<col width="19%" class="tw30" />
+								<col width="*" />
+								</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row"><span>제목</span></th>
+										<td>
+											<input type="text" class="wlong" name="btitle" value="[답변] : ${board.btitle }" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>작성자</span></th>
+										<td>
+											<input type="text" class="wlong" name="name" value="${session_name }" readonly />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>상세 내용</span></th>
+										<td>
+											<textarea class="tta" name="bcontent">
+[답변]
 
-					<div class="viewDivMt">
-						<div class="viewHead">
-							<div class="subject">
-								<ul>
-									<li>${board.btitle}</li>
+
+------------------------------
+${board.bcontent}
+											</textarea>
+										</td>
+									</tr>	
+									<tr>
+										<th scope="row"><span>파일첨부</span></th>
+										<td>
+											<input type="file" name="file" class="fileType" onchange="readUrl(this);" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row"><span>이미지보기</span></th>
+										<td>
+											<img id="preview" src="" width="300px">
+										</td>
+									</tr>
+									<script>
+									   function readUrl(input){
+										   if (input.files && input.files[0]) { //input type="file"
+											    var reader = new FileReader();
+											    reader.onload = function(e) {
+											      document.getElementById('preview').src = e.target.result;
+											    };
+											    reader.readAsDataURL(input.files[0]);
+											  } else {
+											    document.getElementById('preview').src = "";
+											  }
+
+									   }
+									
+									</script>
+																
+								</tbody>
+							</table>
+						</div>
+	
+						<!-- Btn Area -->
+						<div class="btnArea">
+							<div class="bCenter">
+								<ul>																
+									<li><a class="nbtnbig" onclick="location.href='/customer/list'" >취소</a></li>
+									<li><a class="sbtnMini" onclick="replyBtn()">확인</a></li>
 								</ul>
 							</div>
-							<div class="day">
-								<p class="txt">작성자
-								<span>${board.member.name}</span>
-								</p>
-							</div>
-							<div class="day">
-								<p class="txt">작성일
-								<span>
-									<fmt:formatDate value="${board.bdate}" pattern="yyyy.MM.dd"/>
-								</span>
-								</p>
-							</div>
 						</div>
-
-						<div class="viewContents">
-							${board.bcontent }
-							<br/><br/>
-
-							감사합니다.
-						</div>
-						<c:if test="${board.bfile != null }">
-						<div class="viewContents">
-							<img src="/upload/${board.bfile}" width="50%" >
-						</div>
-						</c:if>
-					</div>
-
-
-					<!-- 이전다음글 -->
-					<div class="pnDiv web">
-						<table summary="이전다음글을 선택하여 보실 수 있습니다." class="preNext" border="1" cellspacing="0">
-							<caption>이전다음글</caption>
-							<colgroup>
-							<col width="100px" />
-							<col width="*" />
-							</colgroup>
-							<tbody>
-								<tr>
-									<th class="pre">PREV</th>
-									<td><a href="#">상품 재입고는 언제 되나요?</a></td>
-								</tr>
-
-								<tr>
-									<th class="next">NEXT</th>
-									<td>다음 글이 없습니다.</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<!-- //이전다음글 -->
-
-
-					<!-- Btn Area -->
-					<div class="btnArea btline">
-						<div class="bRight">
-							<ul>
-							    <c:if test="${session_id != null }">
-									<li><a href="/customer/reply?bno=${board.bno}" class="sbtnMini mw">답변달기</a></li>
-									<c:if test="${session_id == board.member.id }">
-										<li><a href="/customer/update?bno=${board.bno}" class="sbtnMini mw">수정</a></li>
-										<li><a onclick="deleteBtn()" class="sbtnMini mw">삭제</a></li>
-									</c:if>
-							    </c:if>
-								<li><a href="/customer/list" class="sbtnMini mw">목록</a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- //Btn Area -->
-					
+						<!-- //Btn Area -->
+					</form>
 				</div>
 			</div>
 			<!-- //contents -->

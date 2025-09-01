@@ -35,6 +35,42 @@ public class CustomerController {
 	@Autowired MemberService memberService;
 	@Autowired HttpSession session;
 	
+	@GetMapping("/customer/reply") //답변달기페이지 열기
+	public String reply(Board b,Model model) {
+		Board board = customerService.findByBno(b.getBno());
+		model.addAttribute("board",board);  //bgroup,bstep,bindent
+		return "customer/reply";
+	}
+	
+	@PostMapping("/customer/reply") //답변달기페이지 열기
+	public String reply(Board b, @RequestPart("file") MultipartFile file,
+			RedirectAttributes redirect) throws Exception {
+		System.out.println("controller bgroup : "+b.getBgroup());
+		
+		if(!file.isEmpty()) {
+			String originFileName = file.getOriginalFilename();
+			long time = System.currentTimeMillis();
+			String uploadFileName = String.format("%d_%s", time,originFileName);
+			String fileUrl = "c:/upload/";
+	    	File f = new File(fileUrl+uploadFileName);
+	    	//파일업로드 진행 - 예외처리
+			file.transferTo(f);
+			b.setBfile(uploadFileName); // 파일이름을 Board저장
+		}
+		
+		// bno -> bno번호없음, bgroup, bstep,bindent -> 부모의 값을 그대로 가지고 있음.
+		// bstep : 1증가해서 사용, bindent : 1증가해서 사용해야 함.
+		// bgroup : 부모와 같은 그룹사용 
+		// bstep : 부모보다 1증가해서 사용
+		// bindent : 부모바다 1증가 해서 사용
+		Member member = memberService.findById((String)session.getAttribute("session_id"));
+		b.setMember(member);
+		customerService.reply(b);
+		redirect.addFlashAttribute("flag",3);
+		return "redirect:/customer/list";
+	}
+	
+	
 	@GetMapping("/customer/update") //수정페이지 열기
 	public String update(Board b, Model model) {
 		Board board = customerService.findByBno(b.getBno());
@@ -60,17 +96,16 @@ public class CustomerController {
 	    	File f = new File(fileUrl+uploadFileName);
 	    	//파일업로드 진행
 			file.transferTo(f);
-			b.setBfile(uploadFileName); // 파일이름을 Board저장
+			board.setBfile(uploadFileName); // 파일이름을 Board저장
 			// 파일이름 중복방지방법
 			//UUID uuid = UUID.randomUUID(); //487297927495728945729847592
 			//String uploadFileName = String.format("%s_%s", uuid,originFileName);
 		}
-		// 변경날짜
-		b.setBdate(new Timestamp(System.currentTimeMillis()));
-		Member member = memberService.findById((String)session.getAttribute("session_id"));
-		// 회원정보
-		b.setMember(member);
-		customerService.save(b);
+		// bfile,btitle,bcontent,bdate -> 새롭게 추가
+		board.setBtitle(b.getBtitle());
+		board.setBcontent(b.getBcontent());
+		board.setBdate(new Timestamp(System.currentTimeMillis()));
+		customerService.save(board);
 		redirect.addFlashAttribute("flag",1);
 		return "redirect:/customer/view?bno="+b.getBno();
 	}
@@ -132,6 +167,8 @@ public class CustomerController {
 	public String view(Board b, Model model) {
 		System.out.println("controller bno : "+b.getBno());
 		Board board = customerService.findByBno(b.getBno());
+		board.setBhit(board.getBhit()+1); //조회수 1증가
+		customerService.save(board);
 		model.addAttribute("board",board);
 		return "customer/view";
 	}

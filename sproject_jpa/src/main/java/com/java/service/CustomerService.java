@@ -26,5 +26,8 @@ public interface CustomerService {
 	//글쓰기 저장
 	void save(Board b);
 
+	//답변달기 저장
+	void reply(Board b);
+
 
 }

@@ -1,6 +1,9 @@
 package com.java.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.java.dto.Board;
 import com.java.dto.Member;
@@ -10,6 +13,13 @@ public interface CustomerRepository extends JpaRepository<Board, Integer> {
 
 	//게시글1개 가져오기
 	Object findByBno(int bno);
+
+	
+	@Modifying // update,delete쿼리를 실행할때 - 에러나는 경우가 있어 반드시 넣어줘야 함.
+	@Transactional //여러개일때
+	@Query(value="update board set bstep=bstep+1 where bgroup=? and bstep>?",
+	nativeQuery = true)
+	void reply(int bgroup, int bstep);
 
 
 	
