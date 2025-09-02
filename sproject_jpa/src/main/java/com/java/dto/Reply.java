@@ -40,7 +40,7 @@ public class Reply {
 	private Member member;
 	
 	@UpdateTimestamp 
-	private Timestamp rDate;
+	private Timestamp rdate;
 	
 
 }

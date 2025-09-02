@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,9 +61,9 @@ public class Board {
 	// FetchType.EAGER : 즉시전략, FetchType.LAZY : 지연전략
 	@OneToMany(mappedBy = "board", 
 			fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
-	@OrderBy("rno desc")
+	@JsonIgnoreProperties({"board"}) //무한루프방지
+	@OrderBy("rno desc")      // rno역순정렬    
 	private List<Reply> reply; //하단댓글 여러개
-	
 	
 	//답변달기
 	@ColumnDefault("0")

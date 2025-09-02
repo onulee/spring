@@ -104,6 +104,52 @@
 				console.log("rpw : "+$(".replynum").val());
 				console.log("rcontent : "+$(".replyType").val());
 				
+				var rpw = $(".replynum").val();
+				var rcontent = $(".replyType").val();
+				
+				//ajax 전송
+				$.ajax({
+					url:"/reply/write",
+					method:"post",
+					data:{"id":"${session_id}","bno":"${board.bno}",
+						"rpw":rpw,"rcontent":rcontent},
+					dataType:"json", //"json" - 데이터를 받음
+					success:function(data){
+						// 댓글개수증가
+						var replyCount = $(".replyCount").text();
+						var replyCount = Number(replyCount)+1;
+						$(".replyCount").text(replyCount);
+						//출력
+						console.log(data);
+						console.log("댓글번호 : "+data.rno);
+						console.log("댓글내용 : "+data.rcontent);
+						console.log("게시글번호 : "+data.board.bno);
+						console.log("회원아이디 : "+data.member.id);
+						//변수
+						var rno = data.rno;
+						var rcontent = data.rcontent;
+						var id = data.member.id;
+						var rdate = data.rdate ;
+						// html소스를 추가
+						var dhtml = `
+						<ul id=`+rno+`>
+							<li class="name">`+id+` <span>[`+rdate+`]</span></li>
+							<li class="txt">`+rcontent+`</li>
+							<li class="btn">
+								<a class="updateBtn rebtn">수정</a>
+								<a class="deleteBtn rebtn">삭제</a>
+							</li>
+						</ul>
+						`;
+						
+						$(".replyBox").prepend(dhtml); //html태그추가
+						
+					},
+					error:function(){
+						alert("실패");
+					}
+				});
+				
 				//완료후
 				$(".replynum").val("");
 				$(".replyType").val("");
@@ -114,7 +160,7 @@
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
+								<p class="txt">총 <span class="orange replyCount">${replyCount}</span> 개의 댓글이 달려있습니다.</p>
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name="rpw" class="replynum" /></p>
 								<textarea name="rcontent" class="replyType"></textarea>
 							</li>
@@ -125,15 +171,19 @@
 
 					<div class="replyBox">
 						
-
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt">대박!!! 이거 저한테 완전 필요한 이벤트였어요!!</li>
+						<c:forEach var="reply" items="${board.reply }">
+						<ul id="${reply.rno}">
+							<li class="name">${reply.member.id } <span>[${reply.rdate }]</span></li>
+							<li class="txt">${reply.rcontent}</li>
+							<c:if test="${session_id == reply.member.id }">
 							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
+								<a class="updateBtn rebtn">수정</a>
+								<a class="deleteBtn rebtn">삭제</a>
 							</li>
+							</c:if>
 						</ul>
+						</c:forEach>
+						
 
 						<!-- 비밀글, 하단댓글수정 -->
 						<!-- 
