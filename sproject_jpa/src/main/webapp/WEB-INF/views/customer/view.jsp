@@ -98,17 +98,27 @@
 						</table>
 					</div>
 					<!-- //이전다음글 -->
-
+		<script>
+			function replyBtn(){
+				alert("하단댓글을 저장합니다.");
+				console.log("rpw : "+$(".replynum").val());
+				console.log("rcontent : "+$(".replyType").val());
+				
+				//완료후
+				$(".replynum").val("");
+				$(".replyType").val("");
+			}
+		</script>
 
 					<!-- 댓글-->
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
 								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
-								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
-								<textarea class="replyType"></textarea>
+								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name="rpw" class="replynum" /></p>
+								<textarea name="rcontent" class="replyType"></textarea>
 							</li>
-							<li class="btn"><a href="#" class="replyBtn">등록</a></li>
+							<li class="btn"><a onclick="replyBtn()" class="replyBtn">등록</a></li>
 						</ul>
 						<p class="ntic">※ 비밀번호를 입력하시면 댓글이 비밀글로 등록 됩니다.</p>
 					</div>
