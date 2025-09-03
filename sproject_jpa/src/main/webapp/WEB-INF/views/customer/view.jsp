@@ -100,70 +100,81 @@
 					</div>
 					<!-- //이전다음글 -->
 		<script>
-			function replyBtn(){
-				alert("하단댓글을 저장합니다.");
-				console.log("rpw : "+$(".replynum").val());
-				console.log("rcontent : "+$(".replyType").val());
-				
-				var rpw = $(".replynum").val();
-				var rcontent = $(".replyType").val();
-				
-				//ajax 전송
-				$.ajax({
-					url:"/reply/write",
-					method:"post",
-					data:{"id":"${session_id}","bno":"${board.bno}",
-						"rpw":rpw,"rcontent":rcontent},
-					dataType:"json", //"json" - 데이터를 받음
-					success:function(data){
-						// 댓글개수증가
-						var replyCount = $(".replyCount").text();
-						var replyCount = Number(replyCount)+1;
-						$(".replyCount").text(replyCount);
-						//출력
-						console.log(data);
-						console.log("댓글번호 : "+data.rno);
-						console.log("댓글내용 : "+data.rcontent);
-						console.log("게시글번호 : "+data.board.bno);
-						console.log("회원아이디 : "+data.member.id);
-						//변수
-						var rno = data.rno;
-						var rcontent = data.rcontent;
-						var id = data.member.id;
-						var rdate = data.rdate ;
-						// html소스를 추가
-						var dhtml = `
-						<ul id=`+rno+`>
-							<li class="name">`+id+` <span>[`+rdate+`]</span></li>
-							<li class="txt">`+rcontent+`</li>
-							<li class="btn">
-								<a class="updateBtn rebtn">수정</a>
-								<a class="deleteBtn rebtn">삭제</a>
-							</li>
-						</ul>
-						`;
 						
-						$(".replyBox").prepend(dhtml); //html태그추가
-						
-					},
-					error:function(){
-						alert("실패");
-					}
-				});
-				
-				//완료후
-				$(".replynum").val("");
-				$(".replyType").val("");
-			}//
-			
 			//jquery선언			
 			$(function(){
 				// 전역변수 선언
 				let id = '';
+				let rpw = '';
 				let rcontent = '';
+				
 				let rdate = '';
 				let updateFlag = 0;
 				let rno = 1;
+				
+				// 하단댓글 추가
+				$(document).on("click",".replyBtn",function(){
+					alert("하단댓글을 저장합니다.");
+					console.log("rpw : "+$(".replynum").val());
+					console.log("rcontent : "+$(".replyType").val());
+					
+					rpw = $(".replynum").val();
+					rcontent = $(".replyType").val();
+					
+					//ajax 전송
+					$.ajax({
+						url:"/reply/write",
+						method:"post",
+						data:{"id":"${session_id}","bno":"${board.bno}",
+							"rpw":rpw,"rcontent":rcontent},
+						dataType:"json", //"json" - 데이터를 받음
+						success:function(data){
+							// 댓글개수증가
+							var replyCount = $(".replyCount").text();
+							var replyCount = Number(replyCount)+1;
+							$(".replyCount").text(replyCount);
+							//출력
+							console.log(data);
+							console.log("댓글번호 : "+data.rno);
+							console.log("댓글내용 : "+data.rcontent);
+							console.log("게시글번호 : "+data.board.bno);
+							console.log("회원아이디 : "+data.member.id);
+							//변수
+							var rno = data.rno;
+							var rcontent = data.rcontent;
+							var id = data.member.id;
+							var rdate = data.rdate ;
+							// html소스를 추가
+							var dhtml = `
+							<ul id=`+rno+`>
+								<li class="name">`+id+` <span>[`+rdate+`]</span></li>
+								<li class="txt">`+rcontent+`</li>
+								<li class="btn">
+									<a class="updateBtn rebtn">수정</a>
+									<a class="deleteBtn rebtn">삭제</a>
+								</li>
+							</ul>
+							`;
+							
+							$(".replyBox").prepend(dhtml); //html태그추가
+							
+						},
+						error:function(){
+							alert("실패");
+						}
+					});
+					
+					//완료후
+					$(".replynum").val("");
+					$(".replyType").val("");
+					
+					
+				});//replyBtn
+				
+				
+				
+				
+				
 				
 				// 정적,동적html 형태 모두 실행됨.
 				// 모두 삭제 가능
@@ -257,10 +268,40 @@
 				$(document).on("click",".confirmBtn",function(){
 					// rno,id-전역변수, rcontent 가져오면 됨.
 					alert("하단댓글을 수정합니다.");
+					updateFlag = 0;
 					rcontent = $(this).closest("ul").children(".txt").children(".replyType").val();
 					console.log("rcontent : ",rcontent);
+					//ajax
+					$.ajax({
 					
-				});			
+						url:"/reply/confirm",
+						method:"put",
+						data:{"rno":rno,"rcontent":rcontent},
+						dataType:"json",
+						success:function(data){
+							
+							//변수
+							rno = data.rno;
+							rcontent = data.rcontent;
+							id = data.member.id;
+							rdate = data.rdate ;
+							// html소스를 추가
+							var dhtml = `
+								<li class="name">`+id+` <span>[`+rdate+`]</span></li>
+								<li class="txt">`+rcontent+`</li>
+								<li class="btn">
+									<a class="updateBtn rebtn">수정</a>
+									<a class="deleteBtn rebtn">삭제</a>
+								</li>
+							`;
+							
+							$("#"+rno).html(dhtml);
+						},
+						error:function(){
+							alert("실패");
+						}
+					});//ajax
+				});//confirmBtn			
 			
 			
 			
@@ -275,7 +316,7 @@
 								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name="rpw" class="replynum" /></p>
 								<textarea name="rcontent" class="replyType"></textarea>
 							</li>
-							<li class="btn"><a onclick="replyBtn()" class="replyBtn">등록</a></li>
+							<li class="btn"><a class="replyBtn">등록</a></li>
 						</ul>
 						<p class="ntic">※ 비밀번호를 입력하시면 댓글이 비밀글로 등록 됩니다.</p>
 					</div>

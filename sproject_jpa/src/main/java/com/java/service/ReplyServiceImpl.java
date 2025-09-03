@@ -25,5 +25,13 @@ public class ReplyServiceImpl implements ReplyService {
 		
 	}
 
+	@Override //하단댓글 검색
+	public Reply findById(int rno) {
+		Reply reply = replyRepository.findById(rno).orElseGet(
+				() -> {	return new Reply();	}
+		);
+		return reply;
+	}
+
 	
 }

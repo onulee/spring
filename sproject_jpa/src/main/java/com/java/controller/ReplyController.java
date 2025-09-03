@@ -1,6 +1,8 @@
 package com.java.controller;
 
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,12 +36,22 @@ public class ReplyController {
 	@Autowired ReplyService replyService;
 	@Autowired HttpSession session;
 	
-	@DeleteMapping("/reply/delete")
+	@PutMapping("/reply/confirm") //댓글수정확인
+	public Reply confirm(Reply r) {
+		Reply reply = replyService.findById(r.getRno());
+		System.out.println("rno : "+r.getRno());
+		System.out.println("rcontent : "+r.getRcontent());
+		reply.setRcontent(r.getRcontent());
+		// DB수정
+		reply = replyService.save(reply);
+		return reply;
+	}
+	
+	@DeleteMapping("/reply/delete") //댓글삭제
 	public String delete(Reply r) {
 		System.out.println("r : "+r.getRno());
 		// DB삭제
 		replyService.deleteById(r.getRno());
-		
 		return "success";
 	}
 	
