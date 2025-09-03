@@ -2,6 +2,7 @@ package com.java.controller;
 
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,7 +73,8 @@ public class ReplyController {
 		// 데이터 추가
 		Member member = memberService.findById(id);
 		r.setMember(member);
-		Board board = customerService.findByBno(bno);
+		Map<String, Object> map = customerService.findByBno(bno);
+		Board board = (Board)(map.get("board"));
 		r.setBoard(board);
 		// DB저장후 가져오기
 		Reply reply = replyService.save(r);

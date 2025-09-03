@@ -1,7 +1,9 @@
 package com.java.service;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
+@Transactional
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -40,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Board findByBno(int bno) {
+	public Map<String, Object> findByBno(int bno) {
 		// 조회수 1증가
 		customerRepository.updateHit(bno);
 		// .get():에러처리안함 .orElseGet():빈객체처리 .roElseThrow():예외처리
@@ -49,7 +52,15 @@ public class CustomerServiceImpl implements CustomerService {
 			return new IllegalArgumentException("해당되는 게시글이 존재하지 않습니다."); 
 		 }
 		);
-		return board;
+		// 이전글
+		Board preBoard = customerRepository.findPreBoard(bno);
+		// 다음글
+		Board nextBoard = customerRepository.findNextBoard(bno);
+		Map<String, Object> map = new HashMap<>();
+		map.put("board", board);
+		map.put("preBoard", preBoard);
+		map.put("nextBoard", nextBoard);
+		return map;
 	}
 
 	@Override //게시글삭제

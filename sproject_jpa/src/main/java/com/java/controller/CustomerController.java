@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class CustomerController {
 	
 	@GetMapping("/customer/reply") //답변달기페이지 열기
 	public String reply(Board b,Model model) {
-		Board board = customerService.findByBno(b.getBno());
-		System.out.println("controller bgroup : "+board.getBgroup());
+		Map<String, Object> map = customerService.findByBno(b.getBno());
+		Board board = (Board) map.get("board");
 		model.addAttribute("board",board);  //bgroup,bstep,bindent
 		return "customer/reply";
 	}
@@ -75,8 +76,8 @@ public class CustomerController {
 	
 	@GetMapping("/customer/update") //수정페이지 열기
 	public String update(Board b, Model model) {
-		Board board = customerService.findByBno(b.getBno());
-		model.addAttribute("board",board);
+		Map<String, Object> map = customerService.findByBno(b.getBno());
+		model.addAttribute("board",map.get("board"));
 		return "customer/update";
 	}
 	
@@ -85,8 +86,8 @@ public class CustomerController {
 			RedirectAttributes redirect, Model model) throws Exception {
 		
 		// Board board 불러옴. - 불러와서 진행
-		Board board = customerService.findByBno(b.getBno());
-		
+		Map<String, Object> map = customerService.findByBno(b.getBno());
+		Board board = (Board) map.get("board");
 		
 		
 		// bno,btitle,bcontent,file
@@ -169,10 +170,17 @@ public class CustomerController {
 	@GetMapping("/customer/view") //상세페이지 열기
 	public String view(Board b, Model model) {
 		System.out.println("controller bno : "+b.getBno());
-		Board board = customerService.findByBno(b.getBno());
-		System.out.println("하단댓글 개수 : "+board.getReply().size());
-		model.addAttribute("board",board);
-		model.addAttribute("replyCount",board.getReply().size());
+		Map<String, Object> map = customerService.findByBno(b.getBno());
+		
+		System.out.println("하단댓글 개수 : "+((Board)(map.get("board"))).getReply().size());
+		//현재글
+		model.addAttribute("board",map.get("board"));
+		//다음글
+		model.addAttribute("nextBoard",map.get("nextBoard"));
+		//이전글
+		model.addAttribute("preBoard",map.get("preBoard"));
+		//댓글개수
+		model.addAttribute("replyCount",((Board)(map.get("board"))).getReply().size());
 		return "customer/view";
 	}
 	

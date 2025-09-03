@@ -88,12 +88,22 @@
 							<tbody>
 								<tr>
 									<th class="pre">PREV</th>
-									<td><a href="#">상품 재입고는 언제 되나요?</a></td>
+									<c:if test="${preBoard != null }">
+										<td><a href="/customer/view?bno=${preBoard.bno}">${preBoard.btitle}</a></td>
+									</c:if>
+									<c:if test="${preBoard == null }">
+										<td>이전글이 없습니다.</td>
+									</c:if>
 								</tr>
 
 								<tr>
 									<th class="next">NEXT</th>
-									<td>다음 글이 없습니다.</td>
+									<c:if test="${nextBoard != null }">
+										<td><a href="/customer/view?bno=${nextBoard.bno}">${nextBoard.btitle}</a></td>
+									</c:if>
+									<c:if test="${nextBoard == null }">
+										<td>다음글이 없습니다.</td>
+									</c:if>
 								</tr>
 							</tbody>
 						</table>

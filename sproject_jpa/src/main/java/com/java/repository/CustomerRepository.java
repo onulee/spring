@@ -29,6 +29,19 @@ public interface CustomerRepository extends JpaRepository<Board, Integer> {
 	void updateHit(@Param("bno") int bno);
 
 
+	//이전글
+	@Query(value="select * from board where bno = ( select preBno from (\r\n"
+			+ "select bno,lag(bno,1,-1) over(order by bgroup desc,bstep asc) as preBno from board\r\n"
+			+ ") a where bno = :bno )", nativeQuery = true)
+	Board findPreBoard(@Param("bno") int bno);
+
+	//다음글
+	@Query(value="select * from board where bno = ( select preBno from (\r\n"
+			+ "select bno,lead(bno,1,-1) over(order by bgroup desc,bstep asc) as preBno from board\r\n"
+			+ ") a where bno = :bno )", nativeQuery = true)
+	Board findNextBoard(@Param("bno") int bno);
+
+
 	
 	
 }
