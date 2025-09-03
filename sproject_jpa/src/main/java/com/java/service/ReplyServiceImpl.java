@@ -19,5 +19,11 @@ public class ReplyServiceImpl implements ReplyService {
 		return reply;
 	}
 
+	@Override //하단댓글 삭제
+	public void deleteById(int rno) {
+		replyRepository.deleteById(rno);
+		
+	}
+
 	
 }

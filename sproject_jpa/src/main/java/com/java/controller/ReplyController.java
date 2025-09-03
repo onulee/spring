@@ -34,6 +34,15 @@ public class ReplyController {
 	@Autowired ReplyService replyService;
 	@Autowired HttpSession session;
 	
+	@DeleteMapping("/reply/delete")
+	public String delete(Reply r) {
+		System.out.println("r : "+r.getRno());
+		// DB삭제
+		replyService.deleteById(r.getRno());
+		
+		return "success";
+	}
+	
 	@GetMapping("/reply/list")
 	public String list() {
 		return "성공 : list를 전달";

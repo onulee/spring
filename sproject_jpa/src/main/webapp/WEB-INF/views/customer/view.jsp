@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	if("${flag}" == "1") alert("게시글이 수정 되었습니다.");
 	
@@ -153,7 +154,53 @@
 				//완료후
 				$(".replynum").val("");
 				$(".replyType").val("");
-			}
+			}//
+			
+			//jquery선언			
+			$(function(){
+				// 정적,동적html 형태 모두 실행됨.
+				// 모두 삭제 가능
+				$(document).on("click",".deleteBtn",function(){
+					
+					console.log("rno번호 : "+$(this).closest("ul").attr("id"));
+					var rno = $(this).closest("ul").attr("id");
+					
+					if(confirm(rno+"번 하단댓글을 삭제하시겠습니까?")){
+						alert(rno+"번 하단댓글을 삭제합니다.");
+						//ajax선언
+						$.ajax({
+							url:"/reply/delete",
+							method:"delete",
+							data:{"rno":rno},
+							dataType:"text", //text,json
+							success:function(data){
+								//alert("성공");
+								console.log(data);
+								
+								// 댓글개수감소
+								var replyCount = $(".replyCount").text();
+								var replyCount = Number(replyCount)-1;
+								$(".replyCount").text(replyCount);
+							},
+							error:function(){
+								alert("실패");
+								location.href="/board/list";
+							}
+						});//ajax
+						// html에서 삭제함
+						$("#"+rno).remove();
+					}//ajax
+				});//deleteBtn
+				
+				//정적html에서만 구동 , 동적html추가된 형태는 구동되지 않음
+				// 최초 불러온 list는 삭제가 가능하지만, 댓글추가된 댓글은 삭제 안됨.
+				//$(".deleteBtn").click(()->{
+				//	alert("경고");
+				//})
+			});
+			
+			
+			
 		</script>
 
 					<!-- 댓글-->
