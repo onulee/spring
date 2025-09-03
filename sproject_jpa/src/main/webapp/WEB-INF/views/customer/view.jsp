@@ -158,12 +158,18 @@
 			
 			//jquery선언			
 			$(function(){
+				// 전역변수 선언
+				let id = '';
+				let rcontent = '';
+				let rdate = '';
+				let updateFlag = 0;
+				let rno = 1;
+				
 				// 정적,동적html 형태 모두 실행됨.
 				// 모두 삭제 가능
 				$(document).on("click",".deleteBtn",function(){
-					
 					console.log("rno번호 : "+$(this).closest("ul").attr("id"));
-					var rno = $(this).closest("ul").attr("id");
+					rno = $(this).closest("ul").attr("id");
 					
 					if(confirm(rno+"번 하단댓글을 삭제하시겠습니까?")){
 						alert(rno+"번 하단댓글을 삭제합니다.");
@@ -192,12 +198,62 @@
 					}//ajax
 				});//deleteBtn
 				
+				//수정 화면 열기
+				$(document).on("click",".updateBtn",function(){
+					// updateFlag가 0일때만 화면 열기, 1이면 화면 열기 실행 안됨.
+					if (updateFlag == 0){
+						updateFlag = 1; // 수정화면이 열려 있는 상태
+						console.log("rno번호 : "+$(this).closest("ul").attr("id"));
+						rno = $(this).closest("ul").attr("id");
+						// 전역변수 - id,rcontent,rdate
+						id = '${session_id}';
+						rcontent = $(this).closest("ul").children(".txt").text();
+						rdate = $(this).closest("ul").children(".name").children("span").text();
+						console.log("id",id);
+						console.log("rcontent",rcontent);
+						console.log("rdate",rdate);
+						
+						let dhtml = `<li class="name"> `+id+` <span> `+rdate+` </span></li>
+							<li class="txt"><textarea class="replyType">`+rcontent+`</textarea></li>
+							<li class="btn">
+								<a class="confirmBtn rebtn">확인</a>
+								<a class="cancelBtn rebtn">취소</a>
+							</li>`;
+						
+						$("#"+rno).html(dhtml);
+					}else{
+						alert("하단댓글 수정화면이 열려 있습니다.\n수정완료후 수정버튼을 클릭하세요.");
+					}
+				});
+				
+				
+				//수정취소
+				$(document).on("click",".cancelBtn",function(){
+					alert("하단댓글 수정을 취소합니다.");
+					console.log("------하단댓글 수정 취소------");
+					console.log("rno",rno);
+					console.log("id",id);
+					console.log("rcontent",rcontent);
+					console.log("rdate",rdate);
+					
+					let dhtml = `<li class="name">`+id+` <span> `+rdate+` </span></li>
+						<li class="txt">`+rcontent+`</li>
+						<li class="btn">
+							<a class="updateBtn rebtn">수정</a>
+							<a class="deleteBtn rebtn">삭제</a>
+						</li>`;
+					
+					$("#"+rno).html(dhtml);
+					updateFlag = 0;
+				});
+				
 				//정적html에서만 구동 , 동적html추가된 형태는 구동되지 않음
 				// 최초 불러온 list는 삭제가 가능하지만, 댓글추가된 댓글은 삭제 안됨.
 				//$(".deleteBtn").click(()->{
 				//	alert("경고");
 				//})
-			});
+				
+			});//jquery
 			
 			
 			
