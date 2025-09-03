@@ -224,7 +224,7 @@
 					}else{
 						alert("하단댓글 수정화면이 열려 있습니다.\n수정완료후 수정버튼을 클릭하세요.");
 					}
-				});
+				});//updateBtn
 				
 				
 				//수정취소
@@ -245,7 +245,7 @@
 					
 					$("#"+rno).html(dhtml);
 					updateFlag = 0;
-				});
+				});//cancelBtn
 				
 				//정적html에서만 구동 , 동적html추가된 형태는 구동되지 않음
 				// 최초 불러온 list는 삭제가 가능하지만, 댓글추가된 댓글은 삭제 안됨.
@@ -253,10 +253,18 @@
 				//	alert("경고");
 				//})
 				
+				// 수정확인
+				$(document).on("click",".confirmBtn",function(){
+					// rno,id-전역변수, rcontent 가져오면 됨.
+					alert("하단댓글을 수정합니다.");
+					rcontent = $(this).closest("ul").children(".txt").children(".replyType").val();
+					console.log("rcontent : ",rcontent);
+					
+				});			
+			
+			
+			
 			});//jquery
-			
-			
-			
 		</script>
 
 					<!-- 댓글-->
