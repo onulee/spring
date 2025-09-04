@@ -135,6 +135,7 @@
 					<div class="searchWrap">
 						<div class="search">
 							<ul>
+								<form action="/customer/search" name="searchFrm">
 								<li class="web"><img src="/images/txt/txt_search.gif" alt="search" /></li>
 								<li class="se">
 									<select name="category">
@@ -144,7 +145,6 @@
 									</select>
 								</li>
 								<li>
-								<form action="/customer/search" name="searchFrm">
 									<input type="text" name="search" class="searchInput" />
 								</form>
 								</li>
