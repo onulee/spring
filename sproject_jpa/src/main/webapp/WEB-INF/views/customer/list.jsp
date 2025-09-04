@@ -137,13 +137,25 @@
 							<ul>
 								<li class="web"><img src="/images/txt/txt_search.gif" alt="search" /></li>
 								<li class="se">
-									<select>
-										<option value="" />제목</option>
+									<select name="category">
+										<option value="all" />전체</option>
+										<option value="btitle" />제목</option>
+										<option value="bcontent" />내용</option>
 									</select>
 								</li>
-								<li><input type="text" class="searchInput" /></li>
-								<li class="web"><a href="#"><img src="/images/btn/btn_search.gif" alt="검색" /></a></li>
-								<li class="mobile"><a href="#"><img src="/images/btn/btn_search_m.gif" alt="검색" /></a></li>
+								<li>
+								<form action="/customer/search" name="searchFrm">
+									<input type="text" name="search" class="searchInput" />
+								</form>
+								</li>
+								<li class="web"><a onclick="searchBtn()"><img src="/images/btn/btn_search.gif" alt="검색" /></a></li>
+								<li class="mobile"><a><img src="/images/btn/btn_search_m.gif" alt="검색" /></a></li>
+								<script>
+								   function searchBtn(){
+									   alert("검색을 진행합니다.");
+									   searchFrm.submit();
+								   }
+								</script>
 							</ul>
 						</div>
 					</div>

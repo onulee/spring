@@ -30,5 +30,13 @@ public interface CustomerService {
 	//답변달기 저장
 	void reply(Board b);
 
+	// 게시글 검색 - 제목
+	Page<Board> findByBtitleContaining(String search, Pageable pageable);
+	// 게시글 검색 - 내용
+	Page<Board> findByBcontentContaining(String search, Pageable pageable);
+	// 게시글 검색 - 전체
+	//Page<Board> findByBtitleContainingBcontentContaining(String search,String search2, Pageable pageable);
+
 
 }
+

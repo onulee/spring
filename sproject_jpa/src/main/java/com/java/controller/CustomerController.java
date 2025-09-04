@@ -37,6 +37,51 @@ public class CustomerController {
 	@Autowired MemberService memberService;
 	@Autowired HttpSession session;
 	
+	@GetMapping("/customer/search")
+	public String search(
+			@RequestParam("category") String category,
+			@RequestParam("search") String search,
+			@RequestParam(name="page",defaultValue = "1") int page,
+			Model model ) {
+		// Pageable 하단넘버링
+		page = page-1; // pageable은 첫페이지가 0부터 시작
+		int size = 10; //1페이지당 10개의 게시글을 가져옴.
+		int rowperpage = 5; //하단넘버링 개수 5개
+		// 정렬 - 답변달기
+		Sort sort = Sort.by(
+			Sort.Order.desc("bgroup"),Sort.Order.asc("bstep")
+		);
+		
+		// 게시글 검색 : containing - 현재페이지,페이지당 개수, 정렬
+		Pageable pageable = PageRequest.of(page, size, sort);
+		Page<Board> pageList = null;
+		if(category.equals("btitle")) {
+			pageList = customerService.findByBtitleContaining(search,pageable);
+		}else if(category.equals("bcontent")) {
+			pageList = customerService.findByBcontentContaining(search,pageable);
+		}else {
+			//pageList = customerService.findByBtitleContainingBcontentContaining(search,search,pageable);
+		}
+		
+		// 리턴타입 : Page - content, pageable
+		List<Board> list = pageList.getContent();
+		int count = pageList.getNumberOfElements(); // 총게시글수
+		page = pageList.getPageable().getPageNumber()+1; // 현재페이지는 시작이 0 이므로 +1를 해줌.
+		int maxpage = pageList.getTotalPages();     // 마지막페이지
+		int startpage = ((page-1)/rowperpage)*rowperpage + 1;       // 하단넘버링 시작번호
+		int endpage = (startpage-1)+rowperpage;             // 하단넘버링 끝번호
+		if (endpage>maxpage) endpage = maxpage;     // 끝번호가 마지막페이지번호보다 크면 마지막번호를 넣음.
+		
+		model.addAttribute("list",list);
+		model.addAttribute("page",page);
+		model.addAttribute("maxpage",maxpage);
+		model.addAttribute("startpage",startpage);
+		model.addAttribute("endpage",endpage);
+		
+		return "customer/list";
+	}
+	
+	
 	@GetMapping("/customer/reply") //답변달기페이지 열기
 	public String reply(Board b,Model model) {
 		Map<String, Object> map = customerService.findByBno(b.getBno());
