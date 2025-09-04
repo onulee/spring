@@ -60,7 +60,7 @@ public class CustomerController {
 		}else if(category.equals("bcontent")) {
 			pageList = customerService.findByBcontentContaining(search,pageable);
 		}else {
-			//pageList = customerService.findByBtitleContainingBcontentContaining(search,search,pageable);
+			pageList = customerService.findByBtitleContainingOrBcontentContaining(search,search,pageable);
 		}
 		
 		// 리턴타입 : Page - content, pageable

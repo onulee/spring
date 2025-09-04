@@ -19,7 +19,7 @@ public interface CustomerRepository extends JpaRepository<Board, Integer> {
 	// 게시글 검색 - 내용
 	Page<Board> findByBcontentContaining(String search, Pageable pageable);
 	// 게시글 검색 - 전체
-	//Page<Board> findByBtitleContainingBcontentContaining(String search,String search2, Pageable pageable);
+	Page<Board> findByBtitleContainingOrBcontentContaining(String search,String search2, Pageable pageable);
 
 	
 	

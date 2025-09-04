@@ -117,11 +117,11 @@ public class CustomerServiceImpl implements CustomerService {
 		Page<Board> pageList = customerRepository.findByBcontentContaining(search,pageable);
 		return pageList;
 	}
-//	@Override //게시글 검색 - 전체
-//	public Page<Board> findByBtitleContainingBcontentContaining(String search,String search2, Pageable pageable) {
-//		Page<Board> pageList = customerRepository.findByBtitleContainingBcontentContaining(search,search,pageable);
-//		return pageList;
-//	}
+	@Override //게시글 검색 - 전체
+	public Page<Board> findByBtitleContainingOrBcontentContaining(String search,String search2, Pageable pageable) {
+		Page<Board> pageList = customerRepository.findByBtitleContainingOrBcontentContaining(search,search,pageable);
+		return pageList;
+	}
 
 	
 
