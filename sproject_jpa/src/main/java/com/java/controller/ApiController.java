@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class ApiController {
 	
-	//@Value("${api.service_key}")  //application.properties에서 값을 가져옴.
-	//String service_key;
-	
+	@Value("${api.service_key}")
+	private String service_key;
 	
 	@GetMapping("/api/list") //api페이지 열기
 	public String list(Model model) { //페이지로 열때는 json파싱으로 해줘야 함.
@@ -34,7 +34,7 @@ public class ApiController {
 			) throws Exception  {
 		//api 호출 : 공공데이터포털에서 제공하는 소스 -----------------------
 		
-		String service_key = "918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D";
+		//String service_key = "918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D";
 		//String page = "1"; //하단넘버링 페이지
 		String web_url = "https://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1";
 		StringBuilder urlBuilder = new StringBuilder(web_url); /*URL*/
