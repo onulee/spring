@@ -161,7 +161,7 @@ $(document).ready(function() {
 				<div id="mnaviOpen"><img src="/images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
 				<ul>
-					<li><a href="/event/list">EVENT</a></li>
+					<li><a href="/api/list">API</a></li>
 					<li><a href="/customer/list">CUSTOMER</a></li>
 					<li><a href="/community/list">COMMUNITY</a></li>
 				</ul>
