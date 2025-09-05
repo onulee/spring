@@ -69,7 +69,8 @@
 					<div class="btnAreaList">
 					    <div class="bwright">
 							<ul>
-								<li><a href="/customer/write" class="sbtnMini">글쓰기</a></li>
+								<li><a onclick="jsonAPIBtn()" class="sbtnMini">JsonAPI</a></li>
+								<li><a onclick="xmlAPIBtn()" class="sbtnMini">xmlAPI</a></li>
 							</ul>
 						</div>
 						<!-- 페이징이동1 -->
@@ -159,44 +160,82 @@
 	
 	<!-- //공공데이터 api 가져오기 -->
 	<script>
-	  $.ajax({
-		 url:"/api/api",
-		 method:"get",
-		 data:{"page":"1"},
-		 dataType:"json",
-		 success:function(data){
-			 alert("공공데이터 api를 가져옵니다.");
-			 console.log(data);
-			 console.log("------------------")
-			 console.log(data.response.body.items.item);
-			 var dhtml = ``;
-			 var apiList = data.response.body.items.item; //item까지 해야 함.
-			 for(var i=0;i<apiList.length;i++){
-			 dhtml += `
-				 <tr>
-					<td class="tnone">`+apiList[i].galContentId+`</td>
-					<td class="left">`+apiList[i].galTitle+`</td>
-					<td>`+apiList[i].galPhotographer+`</td>
-					<td>`+apiList[i].galPhotographyMonth+`</td>
-					<td class="tnone right">`+apiList[i].galPhotographyLocation+`</td>
-					<td><img src='`+apiList[i].galWebImageUrl+`' width="50%"/></td>
-				</tr>
-			 `;
-			 }//for
-			 
-			 $("#tbody").html(dhtml);
-			 
-			 
-			 
-			 
-			 
-			 
-		 },
-		 error:function(){
-			 alert("실패");
-		 }
-		 
-	  });
+	function jsonAPIBtn(){
+		 alert("jsonAPI를 가져옵니다.");
+		 $.ajax({
+			 url:"/api/jsonAPI",
+			 method:"get",
+			 data:{"page":"1"},
+			 dataType:"json",
+			 success:function(data){
+				 console.log(data);
+				 console.log("------------------")
+				 console.log(data.response.body.items.item);
+				 var apiList = data.response.body.items.item; //item까지 해야 함.
+				 var dhtml = ``;
+				 for(var i=0;i<apiList.length;i++){
+				 dhtml += `
+					 <tr>
+						<td class="tnone">`+apiList[i].galContentId+`</td>
+						<td class="left">`+apiList[i].galTitle+`</td>
+						<td>`+apiList[i].galPhotographer+`</td>
+						<td>`+apiList[i].galPhotographyMonth+`</td>
+						<td class="tnone right">`+apiList[i].galPhotographyLocation+`</td>
+						<td><img src='`+apiList[i].galWebImageUrl+`' width="50%"/></td>
+					</tr>
+				 `;
+				 }//for
+				 $("#tbody").html(dhtml);
+			 },
+			 error:function(){ alert("실패"); }
+		  });
+	}//jsonAPIBtn
+	
+	function xmlAPIBtn(){
+		 alert("xmlAPI를 가져옵니다.");
+		 var _xml;
+		 var list;
+		 $.ajax({
+			 url:"/api/xmlAPI",
+			 method:"get",
+			 data:{"page":"1"},
+			 dataType:"xml",
+			 success:function(data){
+				 console.log(data);
+				 console.log("------------------")
+				 console.log($(data).find("items"));
+				 console.log($(data).find("items").find("item").length);
+				 _xml = $(data).find("items"); //root
+				 list = _xml.find("item");
+				 var dhtml = ``;
+				 
+				 for(var i=0;i<list.length;i++){
+					 var galContentId = list.eq(i).find('galContentId').text();
+					 var galTitle = list.eq(i).find('galTitle').text();
+					 var galPhotographer = list.eq(i).find('galPhotographer').text();
+					 var galPhotographyMonth = list.eq(i).find('galPhotographyMonth').text();
+					 var galPhotographyLocation = list.eq(i).find('galPhotographyLocation').text();
+					 var galWebImageUrl = list.eq(i).find('galWebImageUrl').text();
+					 dhtml += `
+						 <tr>
+							<td class="tnone">`+galContentId+`</td>
+							<td class="left">`+galTitle+`</td>
+							<td>`+galPhotographer+`</td>
+							<td>`+galPhotographyMonth+`</td>
+							<td class="tnone right">`+galPhotographyLocation+`</td>
+							<td><img src='`+galWebImageUrl+`' width="50%"/></td>
+						</tr>
+					 `;
+				 }
+				  
+				 $("#tbody").html(dhtml);
+			 },
+			 error:function(){ alert("실패"); }
+		  });
+	}//jsonAPIBtn
+	
+	
+	 
 	</script>
 	
 	
