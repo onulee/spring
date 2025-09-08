@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.java.dto.Member;
+import com.java.service.EmailService;
+import com.java.service.EmailServiceImpl;
 import com.java.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +19,15 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class MemberController {
 
+    private final EmailServiceImpl emailServiceImpl;
+
 	@Autowired MemberService memberService;
+	@Autowired EmailService emailService; // 이메일 발송
 	@Autowired HttpSession session;
+
+    MemberController(EmailServiceImpl emailServiceImpl) {
+        this.emailServiceImpl = emailServiceImpl;
+    }
 	
 	@GetMapping("/member/step01") //회원가입 - step01
 	public String step01() {
@@ -30,6 +39,7 @@ public class MemberController {
 	public String emailSend(@RequestParam("email") String email) {
 		System.out.println("email : "+email);
 		// 이메일전송 구현
+		emailService.emailSend(email);
 		
 		
 		return "success";

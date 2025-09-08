@@ -93,6 +93,7 @@
 						<div class="informbox">
 							<div class="inform">
 								<ul>
+									<li><input type="text" class="nameType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='nameType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 									<li><input type="text" id="email" class="emailType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='emailType'}else {this.className='mfocusnot'}" /></li>
 								</ul>
 	
