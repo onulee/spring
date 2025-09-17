@@ -2,6 +2,7 @@ package com.java.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,23 +16,52 @@ import com.java.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class MemberController {
 
-    private final EmailServiceImpl emailServiceImpl;
-
-	@Autowired MemberService memberService;
+    private final MemberService memberService;
 	@Autowired EmailService emailService; // 이메일 발송
 	@Autowired HttpSession session;
 
-    MemberController(EmailServiceImpl emailServiceImpl) {
-        this.emailServiceImpl = emailServiceImpl;
-    }
+    
 	
 	@GetMapping("/member/step01") //회원가입 - step01
 	public String step01() {
 		return "/member/step01";
+	}
+	
+	@GetMapping("/member/step03") //회원가입 - step03
+	public String step03() {
+		return "/member/step03";
+	}
+	
+	@GetMapping("/member/step04") //회원가입완료 - step04
+	public String step04() {
+		return "/member/step04";
+	}
+	
+	@PostMapping("/member/step03") //회원가입저장 - step03
+	public String step03(Member m, Model model) {
+		System.out.println("phone : "+m.getPhone());
+		System.out.println("member : "+m);
+		
+		Member member = memberService.save(m);
+		
+		return "redirect:/member/step04";
+	}
+	@ResponseBody
+	@PostMapping("/member/idCheck") //회원가입저장 - step03
+	public String idCheck(Member m, Model model) {
+		System.out.println("id : "+m.getId());
+		String idCheck = "사용불가";
+		Member member = memberService.findById(m.getId());
+		if(member.getId() == null) {
+			idCheck = "사용가능";
+		}
+		return idCheck;
 	}
 	
 	@ResponseBody

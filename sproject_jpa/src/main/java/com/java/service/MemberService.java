@@ -10,4 +10,7 @@ public interface MemberService {
 	// 회원1명 검색
 	Member findById(String id);
 
+	// 회원가입저장
+	Member save(Member m);
+
 }

@@ -18,14 +18,14 @@ import com.java.repository.CustomerRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Transactional
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-	@Autowired CustomerRepository customerRepository;
-	//영속성 컨텍스트 - 시퀀스 파일
-//	@PersistenceContext private EntityManager entityManager; 
+	private final CustomerRepository customerRepository;
 	
 	
 	@Override //게시글 전체가져오기 - 현재페이지, 페이지당 개수

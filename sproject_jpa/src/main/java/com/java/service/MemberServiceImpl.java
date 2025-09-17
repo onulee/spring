@@ -6,10 +6,20 @@ import org.springframework.stereotype.Service;
 import com.java.dto.Member;
 import com.java.repository.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	@Autowired MemberRepository memberRepository;
+	private final MemberRepository memberRepository;
+	
+	@Override //회원가입 저장
+	public Member save(Member m) {
+		Member member = memberRepository.save(m);
+		return member;
+	}
+	
 	
 	@Override //로그인 확인
 	public Member findByIdAndPw(String id, String pw) {
@@ -24,5 +34,7 @@ public class MemberServiceImpl implements MemberService {
 		);
 		return member;
 	}
+
+	
 
 }

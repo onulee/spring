@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Data
 @Builder
 @AllArgsConstructor
@@ -34,5 +36,7 @@ public class Member {
 	private String hobby;
 	@CreationTimestamp //sysdate 입력됨.
 	private Timestamp mdate;
+	
+	
 
 }
